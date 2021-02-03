@@ -326,6 +326,16 @@ engine.addSystem(new AutoPlayUnityAudio())
                 exportStr.AppendFormat(SetRotation, entityName, rotation.x, rotation.y, rotation.z, rotation.w);
                 exportStr.AppendFormat(SetScale, entityName, scale.x, scale.y, scale.z);
 
+            glb_mesh_script glb_mesh = (tra.gameObject.GetComponent("glb_mesh_script") as glb_mesh_script);
+            if (glb_mesh)
+            {
+                ProcessGlbShape(tra, entityName, glb_mesh, exportStr);
+            }
+            else
+            {
+                ProcessShape(tra, entityName, exportStr, resourceRecorder, statistics);
+            }
+            
                 Door_script doorObject = (tra.gameObject.GetComponent("Door_script") as Door_script);
                 if (doorObject)
                 {
@@ -353,7 +363,6 @@ engine.addSystem(new AutoPlayUnityAudio())
 
             }
 
-            ProcessShape(tra, entityName, exportStr, resourceRecorder, statistics);
 
             if (exportStr != null && dclObject.dclNodeType == EDclNodeType.gltf) //reverse 180° along local y-axis because of DCL's special purpose.
             {
@@ -635,6 +644,8 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetTextData = "{0}.addComponent(new TextData({0}, \"{1}\", \"{2}\", \"{3}\")) \n";
         private const string SetLink = "{0}.addComponent(new Link({0}, \"{1}\", \"{2}\")) \n";
 
+        private const string SetGLBshape = "{0}.addComponent(new GLTFShape(\"{1}\"))\n";
+
         public static void ProcessMaterial(Transform tra, bool isOnOrUnderGLTF, string entityName,
             List<Material> materialsToExport, StringBuilder exportStr, SceneStatistics statistics)
         {
@@ -770,6 +781,15 @@ engine.addSystem(new AutoPlayUnityAudio())
             //myMaterial.bumpTexture = new Texture"materials/woodBump.png")
             //myMaterial.hasAlpha = true
 
+        }
+
+
+        public static void ProcessGlbShape(Transform tra, string entityName, glb_mesh_script glb_mesh, StringBuilder exportStr)
+        {
+            if (exportStr != null)
+            {
+                    exportStr.AppendFormat(SetGLBshape, entityName, glb_mesh.glb_mesh_path);
+            }
         }
 
         public static void ProcessShape(Transform tra, string entityName, StringBuilder exportStr,

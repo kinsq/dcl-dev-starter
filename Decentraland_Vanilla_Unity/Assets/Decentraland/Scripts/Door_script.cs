@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Door_script : MonoBehaviour
 {
-
     public float closeSpeed = 3;
     public float waitToClose = 0;
     public bool startClosed = false;
+    public bool instantCloseDisapear = false;
     public Vector3 closeMoveVector;
 
     // Start is called before the first frame update
