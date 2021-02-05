@@ -1031,7 +1031,7 @@ engine.addSystem(new AutoPlayUnityAudio())
                 {
                     case TextAnchor.UpperLeft:
                         exportStr.AppendFormat("{0}.getComponent(TextShape).hTextAlign = {1}\n", entityName,
-                            "\"right\"");
+                            "\"left\"");
                         exportStr.AppendFormat("{0}.getComponent(TextShape).vTextAlign = {1}\n", entityName,
                             "\"bottom\"");
                         break;
@@ -1041,24 +1041,24 @@ engine.addSystem(new AutoPlayUnityAudio())
                         break;
                     case TextAnchor.UpperRight:
                         exportStr.AppendFormat("{0}.getComponent(TextShape).hTextAlign = {1}\n", entityName,
-                            "\"left\"");
+                            "\"right\"");
                         exportStr.AppendFormat("{0}.getComponent(TextShape).vTextAlign = {1}\n", entityName,
                             "\"bottom\"");
                         break;
                     case TextAnchor.MiddleLeft:
                         exportStr.AppendFormat("{0}.getComponent(TextShape).hTextAlign = {1}\n", entityName,
-                            "\"right\"");
+                            "\"left\"");
                         break;
                     case TextAnchor.MiddleCenter:
 
                         break;
                     case TextAnchor.MiddleRight:
                         exportStr.AppendFormat("{0}.getComponent(TextShape).hTextAlign = {1}\n", entityName,
-                            "\"left\"");
+                            "\"right\"");
                         break;
                     case TextAnchor.LowerLeft:
                         exportStr.AppendFormat("{0}.getComponent(TextShape).hTextAlign = {1}\n", entityName,
-                            "\"right\"");
+                            "\"left\"");
                         exportStr.AppendFormat("{0}.getComponent(TextShape).vTextAlign = {1}\n", entityName, "\"top\"");
                         break;
                     case TextAnchor.LowerCenter:
@@ -1066,7 +1066,7 @@ engine.addSystem(new AutoPlayUnityAudio())
                         break;
                     case TextAnchor.LowerRight:
                         exportStr.AppendFormat("{0}.getComponent(TextShape).hTextAlign = {1}\n", entityName,
-                            "\"left\"");
+                            "\"right\"");
                         exportStr.AppendFormat("{0}.getComponent(TextShape).vTextAlign = {1}\n", entityName, "\"top\"");
                         break;
                 }
