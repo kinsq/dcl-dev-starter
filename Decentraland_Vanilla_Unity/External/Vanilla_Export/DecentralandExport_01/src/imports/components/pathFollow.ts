@@ -104,7 +104,35 @@ export class FollowPathMoveComponent{
     }
     else this.cancelNextWait = bCancelNext
   }
+  //Activate MoveComponent to move to targetPointIndex and +1 targetPointIndex
+  moveToPoint(pointIndex: number, self:FollowPathMoveComponent=null) {
+    if(!self && this.entityToMove && this.entityToMove.hasComponent(FollowPathMoveComponent)){
+      self = this.entityToMove.getComponent(FollowPathMoveComponent)
+    }
+    if (self) {
+        if (self.targetPoints.length>pointIndex) {
 
+            self.moveComponent.movement.callback = function(){}
+
+            self.moveComponent.movement.targetLocation = self.targetPoints[pointIndex].position
+
+            if (self.targetPoints[pointIndex].speed>0) {
+                self.moveComponent.setSpeed(self.targetPoints[pointIndex].speed)
+                self.moveComponent.activate()
+            }
+            else {
+                self.moveComponent.setSpeed(self.globalSpeed)
+                self.moveComponent.activate()
+            }
+            self.bActive = true
+            self.moveComponent.movement.bActive = true
+            self.targetPointIndex = pointIndex + 1
+        }
+        else {
+          self.bActive = false
+        }
+    }
+  }
   //Activate MoveComponent to move to targetPointIndex and +1 targetPointIndex
   moveToNextPoint(self:FollowPathMoveComponent=null) {
     if(!self && this.entityToMove && this.entityToMove.hasComponent(FollowPathMoveComponent)){

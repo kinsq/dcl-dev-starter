@@ -1,10 +1,12 @@
 import { MoveComponent, MovementType } from './movement'
 
+export var doorSwitches: DoorSwitchComponent[] = []
+
 export enum DoorTriggerBehaviour {
     Close = 0,
     Open = 1,
     Toggle = 2,
-    CloseAndOpen = 2,
+    CloseAndOpen = 3,
 }
 
 //Manage movement between openPosition and closedPosition
@@ -18,6 +20,7 @@ export class DoorComponent{
     openPosition: Vector3 //Position when the door is open, sets when constructed with the entity position
     closedPosition: Vector3 //Position when the door is closed, sets when constructed with the entity position+closeMoveVector
     bIsClosed: Boolean
+    instantCloseAndDisapear: Boolean
     callback: Function
     bInMovmement: Boolean
     waitTimeout: any
@@ -26,14 +29,17 @@ export class DoorComponent{
     audioMoveEntity: IEntity
     audioStopEntity: IEntity
     moveComponent: MoveComponent
-    constructor(doorEntity: IEntity, closeSpeed: number, waitToClose: number, startClosed: Boolean, closeMoveVector: Vector3, callback: Function = function(){}){
+    openScale: Vector3
+    constructor(doorEntity: IEntity, closeSpeed: number, waitToClose: number, startClosed: Boolean, instantCloseAndDisapear: boolean, closeMoveVector: Vector3, callback: Function = function(){}){
         this.doorEntity = doorEntity
         this.closeSpeed = closeSpeed
         this.waitToClose = waitToClose
         this.startClosed = startClosed
         this.closeMoveVector = closeMoveVector
+        this.instantCloseAndDisapear = instantCloseAndDisapear
         this.openPosition = new Vector3(doorEntity.getComponent(Transform).position.x, doorEntity.getComponent(Transform).position.y, doorEntity.getComponent(Transform).position.z)
         this.closedPosition = Vector3.Add(this.openPosition, this.closeMoveVector)
+        this.openScale = doorEntity.getComponent(Transform).scale.clone()
         this.bIsClosed = false
         this.callback = callback
         let self = this
@@ -62,7 +68,15 @@ export class DoorComponent{
     }
     openDoor(bInstant: boolean = false){
       if (this.bIsClosed) {
-        if (bInstant) {
+        if (this.instantCloseAndDisapear) {
+          this.moveComponent.movement.bActive = false
+          this.doorEntity.getComponent(Transform).scale = new Vector3(0,0,0)
+          if (this.doorEntity.hasComponent(GLTFShape)) {
+            this.doorEntity.getComponent(GLTFShape).visible = false
+            this.doorEntity.getComponent(GLTFShape).withCollisions = false
+          }
+        }
+        else if (bInstant) {
             if (this.bInMovmement) {
               this.moveComponent.movement.bActive = false
               this.doorEntity.removeComponent(MoveComponent)
@@ -106,7 +120,15 @@ export class DoorComponent{
     }
     closeDoor(bInstant: boolean = false){
       if (!this.bIsClosed) {
-        if (bInstant) {
+        if (this.instantCloseAndDisapear) {
+          this.moveComponent.movement.bActive = false
+          this.doorEntity.getComponent(Transform).scale = this.openScale.clone()
+          if (this.doorEntity.hasComponent(GLTFShape)) {
+            this.doorEntity.getComponent(GLTFShape).visible = true
+            this.doorEntity.getComponent(GLTFShape).withCollisions = true
+          }
+        }
+        else if (bInstant) {
             if (this.bInMovmement) {
               this.moveComponent.movement.bActive = false
               this.doorEntity.removeComponent(MoveComponent)
@@ -148,6 +170,14 @@ export class DoorComponent{
         this.bIsClosed = true
       }
     }
+    resetDoor(){
+      if (this.startClosed) {
+        this.closeDoor()
+      }
+      else{
+        this.openDoor()
+      }
+    }
     setAudio(audioMoveClip: AudioClip, audioStopClip: AudioClip){
       if (!this.audioMoveEntity) {
         this.audioMoveEntity = new Entity()
@@ -182,4 +212,121 @@ export class DoorComponent{
       }
 
     }
+}
+@Component('DoorSwitchComponent')
+export class DoorSwitchComponent{
+  entity: IEntity
+  doorEnititiesNames: string[]
+  doorEnitities: DoorComponent[]
+  bDebug: boolean
+  doorBehaviour: DoorTriggerBehaviour
+  pointerEvent: OnPointerDown
+  panelEntity: IEntity
+  openEntity: IEntity
+  closeEntity: IEntity
+  bCreated: boolean
+  constructor(entity: IEntity, doorBehaviour: DoorTriggerBehaviour, doorEnititiesNames: string[]){
+      this.entity = entity
+      this.doorEnititiesNames = doorEnititiesNames
+      this.doorBehaviour = doorBehaviour
+      this.bDebug = false
+      this.doorEnitities = []
+      this.bCreated = false
+      doorSwitches.push(this)
+  }
+  createSwitch(){
+    if (!this.bCreated) {
+      this.bCreated = true
+      for (const entityId in this.entity.children) {
+        let child: IEntity = this.entity.children[entityId]
+        if (child.name=="switch_Pannel") {
+          this.panelEntity = child
+        }
+        else if(child.name=="Glow_switch_red"){
+          this.closeEntity = child
+        }
+        else if(child.name=="Glow_switch_green"){
+          this.openEntity = child
+          this.openEntity.getComponent(GLTFShape).visible = false
+        }
+      }
+
+
+      if (this.doorEnitities.length==0) {
+        for (const entityId in engine.getEntitiesWithComponent(DoorComponent)) {
+          let entity: IEntity = engine.getEntitiesWithComponent(DoorComponent)[entityId]
+          if (this.doorEnititiesNames.indexOf(entity.name) != -1) {
+              this.doorEnitities.push(entity.getComponent(DoorComponent))
+          }
+        }
+      }
+      var self = this
+      self.pointerEvent = new OnPointerDown(
+        e => {
+          self.pointerEvent.distance = 0
+          setTimeout(() => {
+            self.pointerEvent.distance = 5
+          }, 500);
+          console.log(self.doorBehaviour);
+          console.log(self.doorEnitities);
+
+          for (let i = 0; i < self.doorEnitities.length; i++) {
+            switch (self.doorBehaviour) {
+              case DoorTriggerBehaviour.Close:
+                self.doorEnitities[i].closeDoor()
+                break;
+              case DoorTriggerBehaviour.Open:
+                self.doorEnitities[i].openDoor()
+                break;
+              case DoorTriggerBehaviour.CloseAndOpen:
+                self.doorEnitities[i].callback = function() {
+                  self.doorEnitities[i].callback = function(){}
+                  self.doorEnitities[i].openDoor()
+                }
+                self.doorEnitities[i].closeDoor()
+                break;
+              case DoorTriggerBehaviour.Toggle:
+                self.doorEnitities[i].toggleDoor()
+                break;
+              default:
+                break;
+            }
+          }
+          switch (self.doorBehaviour) {
+            case DoorTriggerBehaviour.Close:
+              self.openEntity.getComponent(GLTFShape).visible = false
+              self.closeEntity.getComponent(GLTFShape).visible = true
+              break;
+            case DoorTriggerBehaviour.Open:
+
+              self.openEntity.getComponent(GLTFShape).visible = true
+              self.closeEntity.getComponent(GLTFShape).visible = false
+              break;
+            case DoorTriggerBehaviour.CloseAndOpen:
+              setTimeout(() => {
+                self.openEntity.getComponent(GLTFShape).visible = true
+                self.closeEntity.getComponent(GLTFShape).visible = false
+              }, 2000);
+              self.openEntity.getComponent(GLTFShape).visible = false
+              self.closeEntity.getComponent(GLTFShape).visible = true
+              break;
+            case DoorTriggerBehaviour.Toggle:
+              self.openEntity.getComponent(GLTFShape).visible = !self.openEntity.getComponent(GLTFShape).visible
+              self.closeEntity.getComponent(GLTFShape).visible = !self.closeEntity.getComponent(GLTFShape).visible
+              break;
+            default:
+              break;
+          }
+        },
+        {
+          button: ActionButton.POINTER,
+          hoverText: "Press switch",
+          distance: 5
+      })
+      self.panelEntity.addComponent(self.pointerEvent)
+    }
+
+
+  }
+
 }

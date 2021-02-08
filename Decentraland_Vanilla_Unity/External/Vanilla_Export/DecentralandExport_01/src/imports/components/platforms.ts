@@ -158,12 +158,18 @@ export class TriggeredPlatformComponent{
 
     this.entity.getComponent(TriggerComponent).onCameraEnter = camEnter
     this.entity.getComponent(TriggerComponent).onCameraExit = camExit
+    this.movePath.callback = function(){
+      if (!self.bPlayerIn) {
+        self.moveToOrigin()
+      }
+    }
   }
   moveToOrigin(){
     /*What i think this does is return to the targetPoint 0 in the path with some interpolation.
     I don't really know, though. But that's the intention.*/
     this.movePath.moveComponent.movement.speed = this.retreatingSpeed
-    this.movePath.reset(true)
+    this.movePath.reset(false)
+    this.movePath.moveToPoint(0)
   }
   move(){
     this.movePath.bActive = true

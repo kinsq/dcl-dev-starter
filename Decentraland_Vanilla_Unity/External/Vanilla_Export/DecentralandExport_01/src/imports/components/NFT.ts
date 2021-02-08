@@ -49,11 +49,13 @@ export class TextData{
     this.entity.addComponent(new OnPointerDown(
         function() {
           var wg = getWidgetNFT()
-          if (wg.currentText!=self) {
-            wg.setTextdata(self)
-            wg.show(true)
+          if (wg) {
+            if (wg.currentText!=self) {
+              wg.setTextdata(self)
+              wg.show(true)
+            }
+            else wg.show(!wg.container.visible)
           }
-          else wg.show(!wg.container.visible)
         },
         {
           button: ActionButton.POINTER,
@@ -64,7 +66,7 @@ export class TextData{
 
     trigger.onCameraExit = function(){
       var wg = getWidgetNFT()
-      if (wg.currentText==self) {
+      if (wg && wg.currentText==self) {
         wg.show(false)
       }
     }
@@ -99,7 +101,13 @@ export class NFTdata{
     this.smartContract = smartContract
     this.tokenId = tokenId
     if (smartContract!="") {
-      const shapeComponent = new NFTShape('ethereum://'+smartContract+'/'+tokenId,Color3.FromInts(122, 150, 165))
+      const shapeComponent = new NFTShape('ethereum://'+smartContract+'/'+tokenId,
+      {
+        color: Color3.FromInts(0, 0, 0),
+        style: PictureFrameStyle.Metal_Slim
+        //added new styles
+      }
+        )
       if (entity.hasComponent(GLTFShape) || entity.hasComponent(BoxShape) || entity.hasComponent(SphereShape)) {
         const entityNFT = new Entity()
         entityNFT.addComponent(new Transform())
@@ -110,6 +118,7 @@ export class NFTdata{
       else{
         entity.addComponent(shapeComponent)
       }
+      shapeComponent.withCollisions = false
     }
     this.title = title
     this.description = description
@@ -139,11 +148,13 @@ export class NFTdata{
     this.entity.addComponent(new OnPointerDown(
         function() {
           var wg = getWidgetNFT()
-          if (wg.currentNFT!=self) {
-            wg.setNFTdata(self)
-            wg.show(true)
+          if (wg) {
+            if (wg.currentNFT!=self) {
+              wg.setNFTdata(self)
+              wg.show(true)
+            }
+            else wg.show(!wg.container.visible)
           }
-          else wg.show(!wg.container.visible)
         },
         {
           button: ActionButton.POINTER,
@@ -154,7 +165,7 @@ export class NFTdata{
 
     trigger.onCameraExit = function(){
       var wg = getWidgetNFT()
-      if (wg.currentNFT==self) {
+      if (wg && wg.currentNFT==self) {
         wg.show(false)
       }
     }

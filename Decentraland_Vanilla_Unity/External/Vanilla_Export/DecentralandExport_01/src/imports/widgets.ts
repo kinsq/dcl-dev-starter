@@ -180,7 +180,7 @@ export class WidgetTextBox extends Widget{
     this.textBoxImage.vAlign = 'bottom'
     this.textBoxImage.hAlign = 'center'
 
-    this.faceImage = new UIImage(container, new Texture("assets/GhostFace.png"))
+    this.faceImage = new UIImage(container, new Texture("assets/Face.png"))
     this.faceImage.name = 'faceImage'
     this.faceImage.sourceWidth = 512
     this.faceImage.sourceHeight = 512
