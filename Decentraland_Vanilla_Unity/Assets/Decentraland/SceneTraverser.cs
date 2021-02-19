@@ -514,6 +514,14 @@ engine.addSystem(new AutoPlayUnityAudio())
                     }
                     exportStr.AppendFormat(SetLink, entityName, linkObject.url, linkObject.hoverText);
                 }
+                billboard_script billboardObject = (tra.gameObject.GetComponent("billboard_script") as billboard_script);
+                if (billboardObject)
+                {
+                    
+                 exportStr.AppendFormat(SetBillboard, entityName, billboardObject.FacingX, billboardObject.FacingY, billboardObject.FacingZ);
+                 exportStr.AppendFormat(SetScale, entityName, scale.x, scale.y, scale.z*-1);
+
+                }
             }
 
 
@@ -643,6 +651,7 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetNFT = "{0}.addComponent(new NFTdata({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\")) \n";
         private const string SetTextData = "{0}.addComponent(new TextData({0}, \"{1}\", \"{2}\", \"{3}\")) \n";
         private const string SetLink = "{0}.addComponent(new Link({0}, \"{1}\", \"{2}\")) \n";
+        private const string SetBillboard = "{0}.addComponent(new Billboard({1}, {2}, {3})) \n";
 
         private const string SetGLBshape = "{0}.addComponent(new GLTFShape(\"{1}\"))\n";
 
