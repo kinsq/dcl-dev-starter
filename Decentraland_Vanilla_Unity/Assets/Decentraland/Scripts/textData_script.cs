@@ -6,6 +6,6 @@ public class textData_script : MonoBehaviour
 {
     public string title;
     public string autor;
-    [TextArea]
-    public string description;
+    [TextArea(15,60)]
+    public string description = "";
 }
