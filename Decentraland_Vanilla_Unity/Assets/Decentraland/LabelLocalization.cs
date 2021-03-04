@@ -49,6 +49,9 @@ namespace Dcl
 		DCLStartWait10Seconds,
 		ExportForNowSh,
         CoordinatesFormatError,
+        SpawnPointX,
+        SpawnPointY,
+        SpawnPointZ,
 		LastType
 	}
 
@@ -58,6 +61,7 @@ namespace Dcl
         {
             EN,
             CN
+       
         } 
 
 		public static ELanguage Language = ELanguage.EN;

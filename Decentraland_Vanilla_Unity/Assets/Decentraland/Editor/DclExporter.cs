@@ -373,12 +373,17 @@ namespace Dcl
 				sceneMeta.ethAddress = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoAddress), sceneMeta.ethAddress);
 				sceneMeta.contactName = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoName), sceneMeta.contactName);
 				sceneMeta.email = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoEmail), sceneMeta.email);
+				EditorGUILayout.LabelField("SpawnPoint, use [?,?] for Area");
+				sceneMeta.spawnX = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointX), sceneMeta.spawnX);
+				sceneMeta.spawnY = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointY), sceneMeta.spawnY);
+				sceneMeta.spawnZ = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointZ), sceneMeta.spawnZ);
                 EditorGUI.indentLevel = 0;
             }
 
             if (foldout != oriFoldout) EditorPrefs.SetBool("DclBoldOwner", foldout);
 
             EditorGUILayout.EndVertical();
+
         }
 
         void ExportForDCLGUI()
@@ -741,6 +746,9 @@ namespace Dcl
                 fileTxt = fileTxt.Replace("{ETH_ADDRESS}", sceneMeta.ethAddress);
                 fileTxt = fileTxt.Replace("{CONTACT_NAME}", sceneMeta.contactName);
                 fileTxt = fileTxt.Replace("{CONTACT_EMAIL}", sceneMeta.email);
+                fileTxt = fileTxt.Replace("{XSPAWN}", sceneMeta.spawnX);
+                fileTxt = fileTxt.Replace("{YSPAWN}", sceneMeta.spawnY);
+                fileTxt = fileTxt.Replace("{ZSPAWN}", sceneMeta.spawnZ);
                 var parcelsString = GetParcelsString();
                 fileTxt = fileTxt.Replace("{PARCELS}", parcelsString);
                 if (sceneMeta.parcels.Count > 0)

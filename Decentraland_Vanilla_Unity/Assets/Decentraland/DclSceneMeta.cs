@@ -15,6 +15,10 @@ namespace Dcl
         [SerializeField] [HideInInspector] public string ethAddress;
         [SerializeField] [HideInInspector] public string contactName;
         [SerializeField] [HideInInspector] public string email;
+        [SerializeField] [HideInInspector] public string spawnX = "0";
+        [SerializeField] [HideInInspector] public string spawnY = "1";
+        [SerializeField] [HideInInspector] public string spawnZ = "0";
+       
 
         public SceneToGlTFWiz sceneToGlTFWiz;
 

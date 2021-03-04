@@ -14,6 +14,18 @@
     ],
     "base": {BASE}
   },
+    "spawnPoints": [
+    {
+      "name": "spawn1",
+      "default": true,
+      "position": {
+        "x": {XSPAWN},
+        "y": {YSPAWN},
+        "z": {ZSPAWN}
+      }
+    }
+  ],
+
   "communications": {
     "type": "webrtc",
     "signalling": "https://signalling-01.decentraland.org"
