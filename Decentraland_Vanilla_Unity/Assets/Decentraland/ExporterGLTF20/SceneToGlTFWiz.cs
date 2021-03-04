@@ -1495,11 +1495,22 @@ public class SceneToGlTFWiz : MonoBehaviour
 
 		// Unity materials are single sided by default
 		GlTF_Material.BoolValue doubleSided = new GlTF_Material.BoolValue();
-		doubleSided.name = "doubleSided";
-		doubleSided.value = false;
-		material.values.Add(doubleSided);
-	}
-	private bool getPixelsFromTexture(ref Texture2D texture, out Color[] pixels)
+        doubleSided.name = "doubleSided";
+        if(mat.HasProperty("_UVSec") && mat.GetFloat("_UVSec") == 0)
+        {
+            doubleSided.value = false;
+
+        }
+        else
+            doubleSided.value = true;
+        material.values.Add(doubleSided);
+
+
+
+        // [Enum(UV0,0,UV1,1)] _UVSec ("UV Set for secondary textures", Float) = 0
+
+    }
+    private bool getPixelsFromTexture(ref Texture2D texture, out Color[] pixels)
 	{
 		//Make texture readable
 		TextureImporter im = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(texture)) as TextureImporter;
