@@ -1,8 +1,9 @@
-{
-  "display": {
-    "title": "interactive-text",
+ "display": {
+    "title": "{LAND_TITLE}",
+	"description": "{LAND_INFO}",
+	"navmapThumbnail": "{LAND_IMG}",
     "favicon": "favicon_asset"
-  },
+   },
   "contact": {
     "name": "{CONTACT_NAME}",
     "email": "{CONTACT_EMAIL}"

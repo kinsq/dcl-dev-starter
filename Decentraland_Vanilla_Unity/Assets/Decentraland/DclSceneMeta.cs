@@ -12,13 +12,17 @@ namespace Dcl
             new ParcelCoordinates(57, -11),
         };
 
-        [SerializeField] [HideInInspector] public string ethAddress;
-        [SerializeField] [HideInInspector] public string contactName;
-        [SerializeField] [HideInInspector] public string email;
+        [SerializeField] [HideInInspector] public string ethAddress = "ETH Address";
+        [SerializeField] [HideInInspector] public string contactName = "Person";
+        [SerializeField] [HideInInspector] public string email = "Email";
         [SerializeField] [HideInInspector] public string spawnX = "0";
         [SerializeField] [HideInInspector] public string spawnY = "1";
         [SerializeField] [HideInInspector] public string spawnZ = "0";
-       
+        [SerializeField] [HideInInspector] public string landTitle = "Land Title";
+        [SerializeField] [HideInInspector] public string landInfo = "Land Info";
+        [SerializeField] [HideInInspector] public string landImg = "/assets/thumbnail.jpg";
+
+
 
         public SceneToGlTFWiz sceneToGlTFWiz;
 

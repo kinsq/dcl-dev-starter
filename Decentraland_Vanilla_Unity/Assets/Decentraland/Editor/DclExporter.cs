@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Text;
 using UnityEditor;
@@ -46,6 +47,7 @@ namespace Dcl
 
 	}
 
+   
     public class DclExporter : EditorWindow
     {
         const int SPACE_SIZE = 5;
@@ -68,6 +70,7 @@ namespace Dcl
 
         private GameObject prefab;
 
+       
         void OnGUI()
         {
             if (!sceneMeta)
@@ -87,18 +90,32 @@ namespace Dcl
             //GUILayout.Space(SPACE_SIZE);
 
             OwnerGUI();
-            GUILayout.Space(SPACE_SIZE);
+            // GUILayout.Space(SPACE_SIZE);
             
             ExportForDCLGUI();
-            GUILayout.Space(SPACE_SIZE);
+           // GUILayout.Space(SPACE_SIZE);
             
-            ExportForNowGUI();
-            GUILayout.Space(SPACE_SIZE * 3);
-            
+            // ExportForNowGUI(); unused, we do local deploys for now
+            GUILayout.Space(SPACE_SIZE * 1);
+
             #region Help Link
+            
+            
+
+            string url2 = "https://www.polygonalmind.com/";
+            if (GUILayout.Button(string.Format(LabelLocalization.getString(LanguageStringValue.PolygonalMind), url2), EditorStyles.helpBox))
+            {
+                Application.OpenURL(url2);
+            }
+
+            string url3 = "https://github.com/polygonalmind/decelentraland-starter";
+            if (GUILayout.Button(string.Format(LabelLocalization.getString(LanguageStringValue.PMGit), url3), EditorStyles.helpBox))
+            {
+                Application.OpenURL(url3);
+            }
 
             string url = "https://github.com/fairwood/DecentralandUnityPlugin";
-			if (GUILayout.Button(string.Format(LabelLocalization.getString(LanguageStringValue.Document), url), EditorStyles.helpBox))
+            if (GUILayout.Button(string.Format(LabelLocalization.getString(LanguageStringValue.Document), url), EditorStyles.helpBox))
             {
                 Application.OpenURL(url);
             }
@@ -111,7 +128,7 @@ namespace Dcl
                 EditorSceneManager.MarkSceneDirty(sceneMeta.gameObject.scene);
             }
         }
-
+        
         void ParcelGUI()
         {
             EditorGUILayout.BeginVertical("box");
@@ -178,6 +195,8 @@ namespace Dcl
 
             EditorGUILayout.EndHorizontal();
             EditorGUI.indentLevel = 1;
+
+            
             if (foldout)
             {
                 if (editParcelsMode)
@@ -370,13 +389,23 @@ namespace Dcl
             if (foldout)
             {
                 EditorGUI.indentLevel = 1;
-				sceneMeta.ethAddress = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoAddress), sceneMeta.ethAddress);
-				sceneMeta.contactName = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoName), sceneMeta.contactName);
-				sceneMeta.email = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoEmail), sceneMeta.email);
-				EditorGUILayout.LabelField("SpawnPoint, use [?,?] for Area");
+                EditorGUILayout.LabelField("Land General Info", EditorStyles.boldLabel);
+                sceneMeta.landTitle = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.LandName), sceneMeta.landTitle); // title of the land
+                //sceneMeta.landInfo = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.LandDescription), sceneMeta.landInfo); // info of the land
+                EditorGUILayout.LabelField(LabelLocalization.getString(LanguageStringValue.LandDescription));
+                sceneMeta.landInfo = EditorGUILayout.TextArea(sceneMeta.landInfo, GUILayout.ExpandHeight(true));
+                sceneMeta.landImg = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.LandThumbnail), sceneMeta.landImg); // url or uri to a jpg containing the thumbnail to be seen from the Atlas
+                EditorGUILayout.LabelField("Land Owner Info", EditorStyles.boldLabel);
+                sceneMeta.ethAddress = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoAddress), sceneMeta.ethAddress); //"owner" stands for ETH Address holding this LAND
+				sceneMeta.contactName = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoName), sceneMeta.contactName); // Name of the owner
+				sceneMeta.email = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoEmail), sceneMeta.email); // Email or contact form of the owner
+				EditorGUILayout.LabelField("SpawnPoint, use [?,?] for Area", EditorStyles.boldLabel);
 				sceneMeta.spawnX = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointX), sceneMeta.spawnX);
 				sceneMeta.spawnY = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointY), sceneMeta.spawnY);
 				sceneMeta.spawnZ = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointZ), sceneMeta.spawnZ);
+
+
+              
                 EditorGUI.indentLevel = 0;
             }
 
@@ -474,7 +503,7 @@ namespace Dcl
 
             EditorGUILayout.EndVertical();
         }
-
+        /*
         void ExportForNowGUI()
         {
             EditorGUILayout.BeginVertical("box");
@@ -527,13 +556,13 @@ namespace Dcl
                 GUI.backgroundColor = oriColor;
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
-
+                
                 GUILayout.Space(SPACE_SIZE * 2);
             }
 
             EditorGUILayout.EndVertical();
         }
-
+*/
         private DateTime nextTimeRefresh;
 
         private void Update()
@@ -743,12 +772,19 @@ namespace Dcl
             //scene.json
             {
                 var fileTxt = GetSceneJsonFileTemplate();
-                fileTxt = fileTxt.Replace("{ETH_ADDRESS}", sceneMeta.ethAddress);
+                fileTxt = fileTxt.Replace("{LAND_TITLE}", sceneMeta.landTitle);
+                fileTxt = fileTxt.Replace("{LAND_INFO}", sceneMeta.landInfo);
+                fileTxt = fileTxt.Replace("{LAND_IMG}", sceneMeta.landImg);
+
                 fileTxt = fileTxt.Replace("{CONTACT_NAME}", sceneMeta.contactName);
                 fileTxt = fileTxt.Replace("{CONTACT_EMAIL}", sceneMeta.email);
+                fileTxt = fileTxt.Replace("{ETH_ADDRESS}", sceneMeta.ethAddress);
+
+
                 fileTxt = fileTxt.Replace("{XSPAWN}", sceneMeta.spawnX);
                 fileTxt = fileTxt.Replace("{YSPAWN}", sceneMeta.spawnY);
                 fileTxt = fileTxt.Replace("{ZSPAWN}", sceneMeta.spawnZ);
+
                 var parcelsString = GetParcelsString();
                 fileTxt = fileTxt.Replace("{PARCELS}", parcelsString);
                 if (sceneMeta.parcels.Count > 0)

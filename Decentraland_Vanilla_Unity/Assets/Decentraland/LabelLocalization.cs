@@ -9,7 +9,9 @@ namespace Dcl
 	public enum LanguageStringValue{
 		KeepTheseNumbersSmaller=0,
 		Document,
-		DCLProjectPath,
+        PolygonalMind,
+        PMGit,
+        DCLProjectPath,
 		DCLNowProjectPath,
 		SelectDCLProjectPath,
 		OnlyStandardShaderSupported,
@@ -52,7 +54,11 @@ namespace Dcl
         SpawnPointX,
         SpawnPointY,
         SpawnPointZ,
-		LastType
+        LandName,
+        LandDescription,
+        LandThumbnail,
+        LastType
+        
 	}
 
     public static class LabelLocalization
