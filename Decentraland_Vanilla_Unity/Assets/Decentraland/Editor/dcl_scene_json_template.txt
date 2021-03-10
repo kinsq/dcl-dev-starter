@@ -1,3 +1,4 @@
+{
  "display": {
     "title": "{LAND_TITLE}",
 	"description": "{LAND_INFO}",

@@ -383,17 +383,21 @@ namespace Dcl
         void OwnerGUI()
         {
             EditorGUILayout.BeginVertical("box");
+            
 
             var oriFoldout = EditorPrefs.GetBool("DclBoldOwner");
 			var foldout = EditorGUILayout.Foldout(oriFoldout, LabelLocalization.getString(LanguageStringValue.OwnerInfo), true);
             if (foldout)
             {
                 EditorGUI.indentLevel = 1;
+                
                 EditorGUILayout.LabelField("Land General Info", EditorStyles.boldLabel);
                 sceneMeta.landTitle = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.LandName), sceneMeta.landTitle); // title of the land
                 //sceneMeta.landInfo = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.LandDescription), sceneMeta.landInfo); // info of the land
                 EditorGUILayout.LabelField(LabelLocalization.getString(LanguageStringValue.LandDescription));
-                sceneMeta.landInfo = EditorGUILayout.TextArea(sceneMeta.landInfo, GUILayout.ExpandHeight(true));
+                GUIStyle style = new GUIStyle(EditorStyles.textArea);
+                style.wordWrap = true;
+                sceneMeta.landInfo = EditorGUILayout.TextArea(sceneMeta.landInfo, style);
                 sceneMeta.landImg = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.LandThumbnail), sceneMeta.landImg); // url or uri to a jpg containing the thumbnail to be seen from the Atlas
                 EditorGUILayout.LabelField("Land Owner Info", EditorStyles.boldLabel);
                 sceneMeta.ethAddress = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoAddress), sceneMeta.ethAddress); //"owner" stands for ETH Address holding this LAND
