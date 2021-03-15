@@ -99,8 +99,12 @@ namespace Dcl
             GUILayout.Space(SPACE_SIZE * 1);
 
             #region Help Link
-            
-            
+            string url3 = "https://github.com/polygonalmind/decelentraland-starter";
+            string version = "https://www.polygonalmind.com/";
+            if (GUILayout.Button(string.Format(LabelLocalization.getString(LanguageStringValue.SDKVersion), version), EditorStyles.helpBox))
+            {
+                Application.OpenURL(url3);
+            }
 
             string url2 = "https://www.polygonalmind.com/";
             if (GUILayout.Button(string.Format(LabelLocalization.getString(LanguageStringValue.PolygonalMind), url2), EditorStyles.helpBox))
@@ -108,7 +112,7 @@ namespace Dcl
                 Application.OpenURL(url2);
             }
 
-            string url3 = "https://github.com/polygonalmind/decelentraland-starter";
+            
             if (GUILayout.Button(string.Format(LabelLocalization.getString(LanguageStringValue.PMGit), url3), EditorStyles.helpBox))
             {
                 Application.OpenURL(url3);

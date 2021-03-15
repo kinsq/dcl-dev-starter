@@ -57,6 +57,7 @@ namespace Dcl
         LandName,
         LandDescription,
         LandThumbnail,
+		SDKVersion,
         LastType
         
 	}
