@@ -804,7 +804,8 @@ namespace Dcl
                 File.WriteAllText(filePath, fileTxt);
             }
 
-            Debug.Log("===Export Complete===");
+            Debug.Log("===Export Complete "+DateTime.Now.ToString("HH:mm")+"===");
+
         }
 
         #region Utils
