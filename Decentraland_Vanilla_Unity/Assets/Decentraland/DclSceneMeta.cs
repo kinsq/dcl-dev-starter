@@ -20,7 +20,7 @@ namespace Dcl
         [SerializeField] [HideInInspector] public string spawnZ = "0";
         [SerializeField] [HideInInspector] public string landTitle = "Land Title";
         [SerializeField] [HideInInspector] public string landInfo = "Land Info";
-        [SerializeField] [HideInInspector] public string landImg = "/assets/thumbnail.jpg";
+        [SerializeField] [HideInInspector] public string landImg = "assets/thumbnail.jpg";
 
 
 

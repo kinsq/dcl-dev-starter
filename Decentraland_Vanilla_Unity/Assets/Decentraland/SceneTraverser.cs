@@ -993,6 +993,10 @@ engine.addSystem(new AutoPlayUnityAudio())
                 {
                     exportStr.AppendFormat("{0}.getComponent({1}).withCollisions = true\n", entityName, shapeName);
                 }
+                else
+                {
+                    exportStr.AppendFormat("{0}.getComponent({1}).withCollisions = false\n", entityName, shapeName);
+                }
 
                 if (dclObject && !dclObject.visible)
                 {
