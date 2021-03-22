@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5319213709793058806}
   - component: {fileID: 7997761838890356422}
   m_Layer: 0
-  m_Name: COG NFT_Display (1)
+  m_Name: COG NFT_Display_v2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 756230438628417627}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.7, y: 5.7, z: 0.056999996}
+  m_LocalScale: {x: 6, y: 6, z: 0.06}
   m_Children:
   - {fileID: 7142347968657088313}
   m_Father: {fileID: 1739027367}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 6887338538999203886}
   - component: {fileID: 2557569050965623028}
   m_Layer: 0
-  m_Name: NFT_Display (1)
+  m_Name: NFT_Display_v2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -232,7 +232,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100002, guid: 5142ff36ae5c0a744ba39c147dab7565, type: 3}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -309,7 +309,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3615707415981793330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.705, z: -0.039}
+  m_LocalPosition: {x: -0.273, y: -1.705, z: -0.039}
   m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 1739027367}
@@ -468,7 +468,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6121239151701792236}
-  m_Text: NFT_Display (1)
+  m_Text: NFT_Display_v2 (1)
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
