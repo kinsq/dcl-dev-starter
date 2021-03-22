@@ -4,17 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Fire
   - Event
-  - Furniture
-  - Blinds
-  - Structure
-  - EventCollider
-  - Additional
-  - Independent
   - path_point
-  - Collider
-  - Barrier
   - signpannel
   - signpannel_board
   - signpannel_next
