@@ -2,6 +2,7 @@
 export enum MovementType {
    Simple = 0,
    Aceleration = 1,
+   Projectile = 2
 }
 
 interface IMovement{
@@ -147,22 +148,68 @@ class AcelerateMove extends SimpleMove{
   }
 }
 
+export class ProjectileMove extends SimpleMove{
+  inicialDirection: Vector3
+  currentDirection: Vector3
+  gravity: number
+  bStopInFloor: boolean
+  constructor(inicialDirection: Vector3, entityToMove: IEntity, speed: number, bOrientAxisToMovement: Boolean, bActive: Boolean, callback=function(){}){
+      super(new Vector3(), entityToMove, speed, bOrientAxisToMovement, bActive, callback)
+      this.inicialDirection = inicialDirection.normalize()
+      this.currentDirection = inicialDirection.normalize()
+      this.gravity = 0
+      this.bStopInFloor = true
+  }
+  //Update called in the system update loop
+  update(dt: number) {
+    if (this.bActive) {
+      if (this.dt>0 && this.dt<dt) {
+        dt = this.dt
+      }
+      let transform = this.entityToMove.getComponent(Transform)
+      let distance = this.currentDirection.clone().scale(dt*this.speed)
+
+      if (this.bOrientAxisToMovement) {
+        transform.rotation = Quaternion.LookRotation(this.currentDirection)
+      }
+
+      transform.translate(distance)
+      if (transform.position.y<0.15) {
+        this.deactivate()
+      }
+
+      if (this.gravity) {
+        this.currentDirection = Vector3.Lerp(this.currentDirection.clone(), Vector3.Down(), this.gravity).normalize()
+      }
+    }
+  }
+}
+
 //Simple movement component, updated by system when active, calls a callback when reach a minimun distance to targetLocation
 @Component('MoveComponent')
 export class MoveComponent{
   movement: SimpleMove
   constructor(movementType: MovementType,targetLocation: Vector3, entityToMove: IEntity, speed: number, bOrientAxisToMovement: Boolean, bActive: Boolean, callback=function(){}){
-      switch (movementType) {
-        case MovementType.Simple:
-          this.movement = new SimpleMove(targetLocation, entityToMove, speed, bOrientAxisToMovement, bActive, callback)
-          break;
-        case MovementType.Aceleration:
-          this.movement = new AcelerateMove(targetLocation, entityToMove, speed, bOrientAxisToMovement, bActive, callback)
-          break;
-        default:
-          this.movement = new SimpleMove(targetLocation, entityToMove, speed, bOrientAxisToMovement, bActive, callback)
-          break;
-      }
+      this.setMovement(movementType, targetLocation, entityToMove, speed, bOrientAxisToMovement, bActive, callback)
+  }
+  setMovement(movementType: MovementType,targetLocation: Vector3, entityToMove: IEntity, speed: number, bOrientAxisToMovement: Boolean, bActive: Boolean, callback=function(){}){
+    if (this.movement) {
+      this.movement.deactivate()
+    }
+    switch (movementType) {
+      case MovementType.Simple:
+        this.movement = new SimpleMove(targetLocation, entityToMove, speed, bOrientAxisToMovement, bActive, callback)
+        break;
+      case MovementType.Aceleration:
+        this.movement = new AcelerateMove(targetLocation, entityToMove, speed, bOrientAxisToMovement, bActive, callback)
+        break;
+      case MovementType.Projectile:
+        this.movement = new ProjectileMove(targetLocation, entityToMove, speed, bOrientAxisToMovement, bActive, callback)
+        break;
+      default:
+        this.movement = new SimpleMove(targetLocation, entityToMove, speed, bOrientAxisToMovement, bActive, callback)
+        break;
+    }
   }
   //Update called in the system update loop
   update(dt: number) {
