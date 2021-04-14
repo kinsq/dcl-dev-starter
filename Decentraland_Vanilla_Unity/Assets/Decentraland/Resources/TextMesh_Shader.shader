@@ -11,7 +11,7 @@
          Pass {
             // Color [_Color]
              SetTexture [_MainTex] {
-                // combine primary, texture * primary
+                combine primary, texture * primary
              }
          }
      }
