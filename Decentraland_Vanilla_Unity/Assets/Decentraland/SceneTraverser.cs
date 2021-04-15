@@ -493,7 +493,7 @@ engine.addSystem(new AutoPlayUnityAudio())
                     {
                         resourceRecorder.importedModules.Add("NFTdata");
                     }
-                    exportStr.AppendFormat(SetNFT, entityName, nftObject.smartContract, nftObject.tokenId, nftObject.title, nftObject.autor, nftObject.description, nftObject.owner);
+                    exportStr.AppendFormat(SetNFT, entityName, nftObject.smartContract, nftObject.tokenId, nftObject.title, nftObject.autor, nftObject.description, nftObject.owner, nftObject.hoverText);
                 }
                 
                 textData_script textDataObject = (tra.gameObject.GetComponent("textData_script") as textData_script);
@@ -503,7 +503,7 @@ engine.addSystem(new AutoPlayUnityAudio())
                     {
                         resourceRecorder.importedModules.Add("TextData");
                     }
-                    exportStr.AppendFormat(SetTextData, entityName, textDataObject.title, textDataObject.autor, textDataObject.description);
+                    exportStr.AppendFormat(SetTextData, entityName, textDataObject.title, textDataObject.autor, textDataObject.description, textDataObject.owner, textDataObject.hoverText);
                 }
                 link_script linkObject = (tra.gameObject.GetComponent("link_script") as link_script);
                 if (linkObject)
@@ -648,8 +648,8 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetTrigger = "triggersInfo.push(new Trigger(new Vector3({0}, {1}, {2}), new Vector3({3}, {4}, {5}), {6}))\n";
         private const string SetElevatorButton = "{0}.addComponent(new ElevatorButton({0}, {1}, \"{2}\")) \n";
         
-        private const string SetNFT = "{0}.addComponent(new NFTdata({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\")) \n";
-        private const string SetTextData = "{0}.addComponent(new TextData({0}, \"{1}\", \"{2}\", \"{3}\")) \n";
+        private const string SetNFT = "{0}.addComponent(new NFTdata({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\")) \n";
+        private const string SetTextData = "{0}.addComponent(new TextData({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\")) \n";
         private const string SetLink = "{0}.addComponent(new Link({0}, \"{1}\", \"{2}\")) \n";
         private const string SetBillboard = "{0}.addComponent(new Billboard({1}, {2}, {3})) \n";
 

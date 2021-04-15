@@ -29,6 +29,7 @@ public class nft_script : MonoBehaviour
     public string title;
     public string autor;
     public string owner;
+    public string hoverText = "More info";
     [TextArea]
     public string description;
 

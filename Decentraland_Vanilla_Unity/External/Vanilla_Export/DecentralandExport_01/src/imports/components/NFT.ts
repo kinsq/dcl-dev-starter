@@ -18,13 +18,18 @@ export class TextData{
   description: string
   autor: string
   owner: string
+  hoverText: string
   bDebug: boolean
-  constructor(entity: IEntity, title?: string, autor?: string, description?: string, owner?: string){
+  constructor(entity: IEntity, title?: string, autor?: string, description?: string, owner?: string, hoverText?: string){
     this.entity = entity
     this.title = title
     this.description = description
     this.autor = autor
     this.owner = owner
+    this.hoverText = hoverText
+    if (!this.hoverText) {
+      this.hoverText = "More info"
+    }
     this.bDebug = false
     this.createTrigger()
   }
@@ -62,7 +67,7 @@ export class TextData{
         },
         {
           button: ActionButton.POINTER,
-          hoverText: "More info",
+          hoverText: this.hoverText,
           distance: 5
         }
     ))
@@ -98,11 +103,16 @@ export class NFTdata{
   description: string
   autor: string
   owner: string
+  hoverText: string
   bDebug: boolean
-  constructor(entity: IEntity, smartContract, tokenId, title?: string, autor?: string, description?: string, owner?: string){
+  constructor(entity: IEntity, smartContract, tokenId, title?: string, autor?: string, description?: string, owner?: string, hoverText?: string){
     this.entity = entity
     this.smartContract = smartContract
     this.tokenId = tokenId
+    this.hoverText = hoverText
+    if (!this.hoverText) {
+      this.hoverText = "More info"
+    }
     if (smartContract!="") {
       const shapeComponent = new NFTShape('ethereum://'+smartContract+'/'+tokenId,
       {
@@ -164,7 +174,7 @@ export class NFTdata{
         },
         {
           button: ActionButton.POINTER,
-          hoverText: "More info",
+          hoverText: this.hoverText,
           distance: 5
         }
     ))
