@@ -1,3 +1,4 @@
+import { delay } from '../delay'
 
 @Component('TagComponent')
 export class TagComponent{
@@ -28,7 +29,7 @@ export class Elevator{
         this.bAllowEnter = false
         this.state=1
         let self = this
-        setTimeout(() => {
+        delay(() => {
           self.finishUp()
         }, 11*1000);
     }
@@ -39,7 +40,7 @@ export class Elevator{
         this.animClip.speed = 1
         this.state=0
         let self = this
-        setTimeout(() => {
+        delay(() => {
           self.finishDown()
         }, 14*1000);
     }

@@ -2,6 +2,7 @@ import { MovementType } from './movement'
 import { FollowPathMoveComponent, OnFinishPathBehavior } from './pathFollow'
 import utils from "../../../node_modules/decentraland-ecs-utils/index"
 import { TriggerComponent } from '../../../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
+import { delay } from '../delay'
 //Manage movement between openPosition and closedPosition
 
 @Component('PlatformComponent')
@@ -37,7 +38,7 @@ export class PlatformComponent{
     }
     start(){
       if (this.waitToStart>0) {
-        setTimeout(() => {
+        delay(() => {
           this.movePath.bActive = true
           this.movePath.moveComponent.movement.speed = this.moveSpeed
           this.movePath.moveToNextPoint(this.movePath)
@@ -65,7 +66,7 @@ export class PlatformComponent{
       if (this.entity.hasComponent(GLTFShape)) {
         var gtlfShape = this.entity.getComponent(GLTFShape)
         gtlfShape.withCollisions = false
-        setTimeout(() => {
+        delay(() => {
           gtlfShape.visible = false
         }, 1000);
       }
@@ -145,7 +146,7 @@ export class TriggeredPlatformComponent{
     function camEnter(){
       self.bPlayerIn = true
       if (self.waitToStart>0) {
-        setTimeout(() => {
+        delay(() => {
           self.move()
         }, self.waitToStart*1000);
       }

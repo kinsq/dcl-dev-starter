@@ -8,4 +8,5 @@ export { UpdateMovementComponentsSystem, UpdateToPlayerSystem, UpdateTimerWidget
 export { Widget, WidgetTalk, SkipMode, WidgetTextBox, TextProperties, WidgetTextTimmer } from "./widgets"
 export { PlatformComponent } from "./components/platforms"
 export { NFTdata, TextData, WidgetNFT, getWidgetNFT, setWidgetNFT, Link } from "./components/NFT"
-export { Timmer, DoorTimmerComponent, doorTimmersArray } from "./components/timmer"
+export { Timmer, TimmerData, DoorTimmerComponent, doorTimmersArray } from "./components/timmer"
+export { delay, clearDelay } from "./delay"

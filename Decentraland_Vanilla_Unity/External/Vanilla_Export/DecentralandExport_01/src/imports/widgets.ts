@@ -1,5 +1,6 @@
 import { Text, Dialog, textDialogs, getTextData, getText} from '../jsonData/textsData'
 import { UpdateTimerWidgetSystem } from './systems'
+import { delay, clearDelay } from './delay'
 
 export enum SkipMode {
     Click = 0,
@@ -62,13 +63,13 @@ export class Widget{
   //Show durante showTime segundos
   showForTime(bVisible: boolean, showTime: float){
     if (this.showForTimeTimeout) {
-      clearTimeout(this.showForTimeTimeout)
+      clearDelay(this.showForTimeTimeout)
       this.showForTimeTimeout = null
     }
     this.show(bVisible)
     if (showTime>0) {
       let self = this
-      this.showForTimeTimeout = setTimeout(() => {
+      this.showForTimeTimeout = delay(() => {
         self.show(!bVisible)
       }, showTime*1000);
     }
@@ -126,7 +127,7 @@ export class WidgetTextTimmer extends Widget{
     else{
       this.bUpdate = false
       if(this.timeout){
-        clearTimeout(this.timeout)
+        clearDelay(this.timeout)
       }
     }
     /*else if(this.updateSystem){
@@ -136,7 +137,7 @@ export class WidgetTextTimmer extends Widget{
   update(){
     this.textUI.value = millisToMinutesAndSeconds(Date.now() - this.startTime)
     let self = this
-    this.timeout = setTimeout(() => {
+    this.timeout = delay(() => {
       if (self.bUpdate && self.container.visible) {
         self.update()
       }
@@ -200,7 +201,7 @@ export class WidgetTextBox extends Widget{
   show(bVisible: boolean){
     if (this.timeoutNextChar) {
       this.bWritingText = false
-      clearTimeout(this.timeoutNextChar)
+      clearDelay(this.timeoutNextChar)
       this.timeoutNextChar = null
     }
     if (bVisible && this.textData && textDialogs[this.textData.dialogId].texts[this.textData.textId]) {
@@ -211,7 +212,7 @@ export class WidgetTextBox extends Widget{
   setText(text: TextProperties, bWithDelay: boolean = true){
       if (this.timeoutNextChar) {
         this.bWritingText = false
-        clearTimeout(this.timeoutNextChar)
+        clearDelay(this.timeoutNextChar)
         this.timeoutNextChar = null
       }
 
@@ -237,7 +238,7 @@ export class WidgetTextBox extends Widget{
         currentText = currentText + finalText.charAt(currentText.length)
         this.textUI.value = currentText
         let self = this
-        this.timeoutNextChar = setTimeout(() => {
+        this.timeoutNextChar = delay(() => {
           self.setTextWithDelay(finalText, currentText)
         }, 20);
       }
@@ -387,7 +388,7 @@ export class WidgetTalk extends WidgetTextBox{
   }
   show(bVisible: boolean){
     if (this.timeoutNextText) {
-      clearTimeout(this.timeoutNextText)
+      clearDelay(this.timeoutNextText)
       this.timeoutNextText = null
     }
     if (bVisible) {
@@ -451,7 +452,7 @@ export class WidgetTalk extends WidgetTextBox{
       super.setTextWithDelay(finalText, currentText)
       if (currentText.length>=finalText.length) {
         this.bWritingText = false
-        clearTimeout(this.timeoutNextChar)
+        clearDelay(this.timeoutNextChar)
         this.timeoutNextChar = null
         this.setNextAutoSkip()
         this.lastTextMessage()
@@ -463,9 +464,9 @@ export class WidgetTalk extends WidgetTextBox{
   }
   private setNextAutoSkip(){
     if (this.isAutoSkip()) {
-      clearTimeout(this.timeoutNextText)
+      clearDelay(this.timeoutNextText)
       let self = this
-      this.timeoutNextText = setTimeout(() => {
+      this.timeoutNextText = delay(() => {
         self.showNextText()
       }, this.timeToNext*1000);
     }
@@ -513,7 +514,7 @@ export class WidgetTalk extends WidgetTextBox{
     self.inputUnsubscribe = self.inputInstance.subscribe("BUTTON_DOWN", ActionButton.POINTER, false, e => {
       if (self.bWritingText) {
         self.bWritingText = false
-        clearTimeout(self.timeoutNextChar)
+        clearDelay(self.timeoutNextChar)
         self.timeoutNextChar = null
         self.setText(self.textData, false)
       }

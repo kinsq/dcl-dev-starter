@@ -1,4 +1,5 @@
 import { MoveComponent, MovementType } from './movement'
+import { delay, clearDelay } from '../delay'
 
 export var doorSwitches: DoorSwitchComponent[] = []
 
@@ -81,7 +82,7 @@ export class DoorComponent{
               this.moveComponent.movement.bActive = false
               this.doorEntity.removeComponent(MoveComponent)
               if (this.waitTimeout) {
-                clearTimeout(this.waitTimeout)
+                clearDelay(this.waitTimeout)
               }
             }
             this.doorEntity.getComponent(Transform).position.set(this.openPosition.x, this.openPosition.y, this.openPosition.z)
@@ -92,14 +93,14 @@ export class DoorComponent{
           if (this.bInMovmement) {
             this.moveComponent.movement.bActive = false
             if (this.waitTimeout) {
-              clearTimeout(this.waitTimeout)
+              clearDelay(this.waitTimeout)
             }
           }
           this.bInMovmement = true
           this.moveComponent.movement.speed = this.closeSpeed
           this.moveComponent.movement.targetLocation = this.openPosition
           if (this.waitToClose>0) {
-            this.waitTimeout = setTimeout(function () {
+            this.waitTimeout = delay(function () {
               if (!selfDoor.doorEntity.hasComponent(MoveComponent)) {
                 selfDoor.doorEntity.addComponent(selfDoor.moveComponent)
               }
@@ -133,7 +134,7 @@ export class DoorComponent{
               this.moveComponent.movement.bActive = false
               this.doorEntity.removeComponent(MoveComponent)
               if (this.waitTimeout) {
-                clearTimeout(this.waitTimeout)
+                clearDelay(this.waitTimeout)
               }
             }
             this.doorEntity.getComponent(Transform).position.set(this.closedPosition.x, this.closedPosition.y, this.closedPosition.z)
@@ -143,14 +144,14 @@ export class DoorComponent{
           if (this.bInMovmement) {
             this.moveComponent.movement.bActive = false
             if (this.waitTimeout) {
-              clearTimeout(this.waitTimeout)
+              clearDelay(this.waitTimeout)
             }
           }
           this.bInMovmement = true
           this.moveComponent.movement.speed = this.closeSpeed
           this.moveComponent.movement.targetLocation =  this.closedPosition
           if (this.waitToClose>0) {
-            this.waitTimeout = setTimeout(function () {
+            this.waitTimeout = delay(function () {
               if (!selfDoor.doorEntity.hasComponent(MoveComponent)) {
                 selfDoor.doorEntity.addComponent(selfDoor.moveComponent)
               }
@@ -264,11 +265,11 @@ export class DoorSwitchComponent{
       self.pointerEvent = new OnPointerDown(
         e => {
           self.pointerEvent.distance = 0
-          setTimeout(() => {
+          delay(() => {
             self.pointerEvent.distance = 5
           }, 500);
-          console.log(self.doorBehaviour);
-          console.log(self.doorEnitities);
+          //console.log(self.doorBehaviour);
+          //console.log(self.doorEnitities);
 
           for (let i = 0; i < self.doorEnitities.length; i++) {
             switch (self.doorBehaviour) {
@@ -303,7 +304,7 @@ export class DoorSwitchComponent{
               self.closeEntity.getComponent(GLTFShape).visible = false
               break;
             case DoorTriggerBehaviour.CloseAndOpen:
-              setTimeout(() => {
+              delay(() => {
                 self.openEntity.getComponent(GLTFShape).visible = true
                 self.closeEntity.getComponent(GLTFShape).visible = false
               }, 2000);

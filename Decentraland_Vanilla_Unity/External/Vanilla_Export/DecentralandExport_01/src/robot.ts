@@ -1,5 +1,6 @@
 import { FollowPathMoveComponent } from "./imports/components/pathFollow"
 import { getHUD } from "./hud"
+import { delay, clearDelay } from './imports/index'
 
 const camera = Camera.instance
 
@@ -70,11 +71,11 @@ export class Robot{
     this.bLookingAt = true
     this.lookAtPlayer()
     var self = this
-    setTimeout(() => {
+    delay(() => {
       getHUD().setRobotDialogIndex(this.dialogIndex)
       getHUD().wgTalkRobot.callback = function(){
         getHUD().hideAll()
-        setTimeout(() => {
+        delay(() => {
           self.stopLookAt()
           self.setMoveMode()
         }, 500);
@@ -104,7 +105,7 @@ export class Robot{
     var self = this
     if (alpha<1) {
 
-      this.lookAtTimeout = setTimeout(() => {
+      this.lookAtTimeout = delay(() => {
         self.lookAtPlayer(startVector, targetVector, alpha+0.1)
       }, 50);
 
@@ -112,13 +113,13 @@ export class Robot{
     else if(this.bLookingAt){
       startVector = targetVector.clone()
       targetVector =  directionVectorBetweenTwoPoints(this.entity.getComponent(Transform).position, camera.position)
-      this.lookAtTimeout = setTimeout(() => {
+      this.lookAtTimeout = delay(() => {
         self.lookAtPlayer(startVector, targetVector, 0)
       }, 50);
     }
   }
   stopLookAt(){
     this.bLookingAt = false
-    clearTimeout(this.lookAtTimeout)
+    clearDelay(this.lookAtTimeout)
   }
 }

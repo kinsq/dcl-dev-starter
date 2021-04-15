@@ -1,21 +1,25 @@
 import {DoorComponent, DoorTriggerBehaviour} from './doors'
+import { delay, clearDelay } from '../delay'
+
+export type TimmerData = {
+  seconds: number
+  bLoop?: boolean,
+  maxLoops?: number,
+  bAutoActivate?: boolean
+}
 
 export var doorTimmersArray: DoorTimmerComponent[] = []
 export class Timmer{
-  time: double
-  bAutoActivate: boolean
-  bLoop: boolean
-  maxLoops: number
-  callback: Function
+  timmerData: TimmerData
+  callback: Function = ()=>{}
   timeout: any
-
-  constructor(time: double, bLoop: boolean, maxLoops: number, bAutoActivate: boolean, callback: Function = function(){}){
-      this.time = time
-      this.bLoop = bLoop
-      this.maxLoops = maxLoops
-      this.bAutoActivate = bAutoActivate
+  constructor(callback: Function, timmerData: TimmerData){
+      this.timmerData = timmerData
+      if (!this.timmerData.maxLoops) {
+        this.timmerData.maxLoops = 0
+      }
       this.callback = callback
-      if (this.bAutoActivate) {
+      if (this.timmerData.bAutoActivate) {
         this.start()
       }
   }
@@ -25,19 +29,19 @@ export class Timmer{
       if (self.timeout) {
         self.stop(false)
       }
-      self.timeout = setTimeout(() => {
-        if (self.bLoop) {
-          if (self.maxLoops<=0 || nLoopsDone<self.maxLoops) {
+      self.timeout = delay(() => {
+        if (self.timmerData.bLoop) {
+          if (self.timmerData.maxLoops<=0 || nLoopsDone<self.timmerData.maxLoops) {
             self.start(nLoopsDone+1)
           }
         }
         self.callback()
-      }, self.time*1000);
+      }, self.timmerData.seconds*1000);
 
   }
   stop(fireCallback: boolean = false){
     if (this.timeout) {
-      clearTimeout(this.timeout)
+      clearDelay(this.timeout)
       this.timeout = null
     }
     if (fireCallback) {
@@ -91,7 +95,15 @@ export class DoorTimmerComponent{
         }
       }
     }
-    this.timmer = new Timmer(time,bLoop,maxLoops,bAutoActivate,callback)
+    this.timmer = new Timmer(
+      callback,
+      {
+        seconds: time,
+        bLoop: bLoop,
+        maxLoops: maxLoops,
+        bAutoActivate: bAutoActivate
+      }
+    )
     doorTimmersArray.push(this)
   }
   createTimmer(){

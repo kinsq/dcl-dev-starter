@@ -1,4 +1,5 @@
 import { MoveComponent, MovementType } from './movement'
+import { delay, clearDelay } from '../delay'
 
 export enum OnFinishPathBehavior {
     Stop = 0,
@@ -98,7 +99,7 @@ export class FollowPathMoveComponent{
   cancelTimeout(bCancelNext: boolean = false){
     if(this.timeout != null)
     {
-      clearTimeout(this.timeout)
+      clearDelay(this.timeout)
       this.moveToNextPoint()
       this.timeout = null
     }
@@ -162,7 +163,7 @@ export class FollowPathMoveComponent{
                 waitTime = 10
               }
               self.moveComponent.movement.callback = function(){
-                self.timeout = setTimeout(function(){
+                self.timeout = delay(function(){
                   self.moveToNextPoint()
                 }, waitTime);
               }
