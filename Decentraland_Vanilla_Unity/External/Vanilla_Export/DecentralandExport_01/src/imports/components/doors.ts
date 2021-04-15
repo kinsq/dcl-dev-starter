@@ -239,7 +239,7 @@ export class DoorSwitchComponent{
     if (!this.bCreated) {
       this.bCreated = true
       for (const entityId in this.entity.children) {
-        let child: IEntity = this.entity.children[entityId]
+        let child: Entity = this.entity.children[entityId] as Entity
         if (child.name=="switch_Pannel") {
           this.panelEntity = child
         }
@@ -255,7 +255,7 @@ export class DoorSwitchComponent{
 
       if (this.doorEnitities.length==0) {
         for (const entityId in engine.getEntitiesWithComponent(DoorComponent)) {
-          let entity: IEntity = engine.getEntitiesWithComponent(DoorComponent)[entityId]
+          let entity: Entity = engine.getEntitiesWithComponent(DoorComponent)[entityId] as Entity
           if (this.doorEnititiesNames.indexOf(entity.name) != -1) {
               this.doorEnitities.push(entity.getComponent(DoorComponent))
           }

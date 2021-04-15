@@ -109,7 +109,7 @@ export class DoorTimmerComponent{
   createTimmer(){
     if (this.doorEnitities.length==0) {
       for (const entityId in engine.getEntitiesWithComponent(DoorComponent)) {
-        let entity: IEntity = engine.getEntitiesWithComponent(DoorComponent)[entityId]
+        let entity: Entity = engine.getEntitiesWithComponent(DoorComponent)[entityId] as Entity
         if (this.doorEnititiesNames.indexOf(entity.name) != -1) {
             this.doorEnitities.push(entity.getComponent(DoorComponent))
         }

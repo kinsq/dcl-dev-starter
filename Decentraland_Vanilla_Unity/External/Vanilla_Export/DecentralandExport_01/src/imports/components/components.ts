@@ -6,18 +6,18 @@ export class TagComponent{
 }
 
 export class Elevator{
-  entity: IEntity
+  entity: Entity
   state: number
   animClip: AnimationState
   bAllowEnter: boolean
   constructor(entity: IEntity){
+    this.entity = entity as Entity
     let animator = new Animator()
-    let clipElevator = new AnimationState(entity.name)
+    let clipElevator = new AnimationState(this.entity.name)
     animator.addClip(clipElevator)
     entity.addComponent(animator)
     clipElevator.looping = false
     clipElevator.stop()
-    this.entity = entity
     this.state = 0
     this.animClip = clipElevator
     this.bAllowEnter = true
@@ -60,12 +60,12 @@ export class Elevator{
 
 @Component('ElevatorButton')
 export class ElevatorButton{
-  entity: IEntity
+  entity: Entity
   elevatorName: string
   elevator: Elevator
   floor: number
   constructor(entity: IEntity, floor: number, elevatorName: string){
-    this.entity = entity
+    this.entity = entity as Entity
     this.floor = floor
     this.elevatorName = elevatorName
     let self = this
