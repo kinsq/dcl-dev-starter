@@ -79,11 +79,16 @@ export class Ghost{
       if(!this.entity.hasComponent(utils.TriggerComponent)){
         let self = this
         let triggerBox = new utils.TriggerBoxShape(new Vector3 (1,3,1), new Vector3(0,1,0))
-        let trigger = new utils.TriggerComponent(triggerBox, 1, 1,
-          null, //onTriggerEnter
-          null, //onTriggerExit
-          null,  //onCameraEnter
-          null //onCameraExits
+        let trigger = new utils.TriggerComponent(triggerBox,
+          {
+            layer: 1, //layer
+            triggeredByLayer: 1, //triggeredByLayer
+            onTriggerEnter: null, //onTriggerEnter
+            onTriggerExit: null, //onTriggerExit
+            onCameraEnter: null,  //onCameraEnter
+            onCameraExit: null, //onCameraExit
+            enableDebug: false
+          }
         )
         this.entity.addComponent(trigger)
       }

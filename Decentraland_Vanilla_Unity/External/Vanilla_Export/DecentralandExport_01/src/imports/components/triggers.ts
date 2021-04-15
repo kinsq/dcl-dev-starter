@@ -19,12 +19,15 @@ export class Trigger{
     //create trigger for entity
     let trigger = new utils.TriggerComponent(
        triggerBox, //shape
-       0, //layer
-       0, //triggeredByLayer
-       null, //onTriggerEnter
-       null, //onTriggerExit
-       null,  //onCameraEnter
-       null //onCameraExits
+       {
+         layer: 0, //layer
+         triggeredByLayer: 0, //triggeredByLayer
+         onTriggerEnter: null, //onTriggerEnter
+         onTriggerExit: null, //onTriggerExit
+         onCameraEnter: null,  //onCameraEnter
+         onCameraExit: null, //onCameraExit
+         enableDebug: false
+       }
     )
 
     const triggerEntity = new Entity()
@@ -74,12 +77,15 @@ export class TrapDoorTrigger{
     //create trigger for entity
     let trigger = new utils.TriggerComponent(
        triggerBox, //shape
-       0, //layer
-       0, //triggeredByLayer
-       null, //onTriggerEnter
-       null, //onTriggerExit
-       null,  //onCameraEnter
-       null //onCameraExits
+       {
+         layer: 0, //layer
+         triggeredByLayer: 0, //triggeredByLayer
+         onTriggerEnter: null, //onTriggerEnter
+         onTriggerExit: null, //onTriggerExit
+         onCameraEnter: null,  //onCameraEnter
+         onCameraExit: null, //onCameraExit
+         enableDebug: false
+       }
     )
 
     const triggerEntity = new Entity()
