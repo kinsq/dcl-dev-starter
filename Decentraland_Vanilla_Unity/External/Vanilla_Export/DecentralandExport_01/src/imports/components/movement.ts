@@ -183,6 +183,10 @@ export class ProjectileMove extends SimpleMove{
       }
     }
   }
+  setDirection(newDirection: Vector3){
+    this.inicialDirection = newDirection.clone().normalize()
+    this.currentDirection = this.inicialDirection.clone()
+  }
 }
 
 //Simple movement component, updated by system when active, calls a callback when reach a minimun distance to targetLocation
