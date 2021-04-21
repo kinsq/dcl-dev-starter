@@ -301,6 +301,25 @@ engine.addSystem(new AutoPlayUnityAudio())
                     exportStr.AppendFormat(SetPathFollower, entityName, pathFollower.pathToFollow.name, autoActivate);
                 }
 
+                Teleport_script teleport = (tra.gameObject.GetComponent("Teleport_script") as Teleport_script);
+                if (teleport)
+                {
+                    if (resourceRecorder.importedModules.IndexOf("Teleport") < 0)
+                    {
+                        resourceRecorder.importedModules.Add("Teleport");
+                    }
+                    Vector3 target = teleport.targetPosition;
+                    if (teleport.targetEntity){
+                        Vector3 targetEntPos = (teleport.targetEntity.GetComponent("Transform") as Transform).position;
+                        target = new Vector3(
+                            targetEntPos.x, 
+                            targetEntPos.y,
+                            targetEntPos.z
+                        );
+                    }
+                    exportStr.AppendFormat(SetTeleport, entityName, target.x, target.y, target.z, teleport.hoverText);
+                }
+
                 if (tra.gameObject.tag != "Untagged")
                 {
                     if (resourceRecorder.importedModules.IndexOf("TagComponent") < 0)
@@ -647,6 +666,8 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetTriggerDoor = "trapDoorTriggersInfo.push(new TrapDoorTrigger(new Vector3({0}, {1}, {2}), new Vector3({3}, {4}, {5}), {6}, {7}))\n";
         private const string SetTrigger = "triggersInfo.push(new Trigger(new Vector3({0}, {1}, {2}), new Vector3({3}, {4}, {5}), {6}))\n";
         private const string SetElevatorButton = "{0}.addComponent(new ElevatorButton({0}, {1}, \"{2}\")) \n";
+
+        private const string SetTeleport = "{0}.addComponent(new Teleport({0}, new Vector3({1}, {2}, {3}), {4})) \n";
         
         private const string SetNFT = "{0}.addComponent(new NFTdata({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\")) \n";
         private const string SetTextData = "{0}.addComponent(new TextData({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\")) \n";
