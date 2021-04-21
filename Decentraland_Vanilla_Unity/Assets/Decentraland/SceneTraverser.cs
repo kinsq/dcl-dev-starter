@@ -667,7 +667,7 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetTrigger = "triggersInfo.push(new Trigger(new Vector3({0}, {1}, {2}), new Vector3({3}, {4}, {5}), {6}))\n";
         private const string SetElevatorButton = "{0}.addComponent(new ElevatorButton({0}, {1}, \"{2}\")) \n";
 
-        private const string SetTeleport = "{0}.addComponent(new Teleport({0}, new Vector3({1}, {2}, {3}), {4})) \n";
+        private const string SetTeleport = "{0}.addComponent(new Teleport({0}, new Vector3({1}, {2}, {3}), \"{4}\")) \n";
         
         private const string SetNFT = "{0}.addComponent(new NFTdata({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\")) \n";
         private const string SetTextData = "{0}.addComponent(new TextData({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\")) \n";
