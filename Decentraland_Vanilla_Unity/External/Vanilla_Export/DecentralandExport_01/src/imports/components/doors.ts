@@ -268,8 +268,8 @@ export class DoorSwitchComponent{
           delay(() => {
             self.pointerEvent.distance = 5
           }, 500);
-          //console.log(self.doorBehaviour);
-          //console.log(self.doorEnitities);
+          //console_log(self.doorBehaviour);
+          //console_log(self.doorEnitities);
 
           for (let i = 0; i < self.doorEnitities.length; i++) {
             switch (self.doorBehaviour) {

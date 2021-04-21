@@ -36,7 +36,7 @@ function signatureListRequest(newpage: number, callback = function(){}){
           requestInfo.nPages = Math.ceil(requestInfo.nSigns/LIMIT)
           requestInfo.bPendingRequest = false
           callback()
-          console.log(requestInfo);
+          console_log(requestInfo);
         }
         else{
           throw new Error(json.error)
@@ -45,7 +45,7 @@ function signatureListRequest(newpage: number, callback = function(){}){
       } catch (e){
         requestInfo.bPendingRequest = false
         log("failed to reach URL")
-        console.log(e);
+        console_log(e);
       }
     })
   }
@@ -62,7 +62,7 @@ function signBookRequest(address:string, name:string, callback = function(){}){
         })
         let json = await response.json()
         if (json.status && json.status=="success") {
-          console.log(json);
+          console_log(json);
           callback()
         }
         else{
@@ -72,7 +72,7 @@ function signBookRequest(address:string, name:string, callback = function(){}){
       } catch (e){
         requestInfo.bAlreadySigned = false
         log("failed to reach URL")
-        console.log(e);
+        console_log(e);
       }
     })
   }

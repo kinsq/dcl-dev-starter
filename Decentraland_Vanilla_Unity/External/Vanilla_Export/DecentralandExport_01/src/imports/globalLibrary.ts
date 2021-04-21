@@ -39,3 +39,7 @@ function millisToSeconds(millis: number) {
   var secondsString = seconds.toFixed(0)
   return (seconds < 10 ? '0' : '') + secondsString;
 }
+
+function console_log(...args: any[]){
+  console.log(...args)
+}

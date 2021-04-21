@@ -61,7 +61,7 @@ export function sendScoreRequest(address:string, name:string, score: number, cal
         })
         let json = await response.json()
         if (json.status && json.status=="success") {
-          console.log(json);
+          console_log(json);
           callback()
           leaderboardRequest(requestInfo.page)
         }
@@ -71,7 +71,7 @@ export function sendScoreRequest(address:string, name:string, score: number, cal
 
       } catch (e){
         log("failed to reach URL")
-        console.log(e);
+        console_log(e);
       }
     })
 }
