@@ -6,7 +6,7 @@ public class nft_script_copycat : MonoBehaviour
 {
     public GameObject COG;
     public GameObject LinkButton;
-    public Transform LinkTrans;
+    private Transform LinkTrans;
     public GameObject DebugText;
     
 
