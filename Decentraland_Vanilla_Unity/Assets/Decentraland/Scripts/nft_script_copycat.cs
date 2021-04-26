@@ -5,6 +5,8 @@ using System;
 public class nft_script_copycat : MonoBehaviour
 {
     public GameObject COG;
+    public GameObject LinkButton;
+    public Transform LinkTrans;
     public GameObject DebugText;
     
 
@@ -15,9 +17,10 @@ public class nft_script_copycat : MonoBehaviour
 
     void Start()
     {
-    
-        DoNaming();
+
         
+        DoNaming();
+        DoLinkNaming();
     
        
     }
@@ -31,6 +34,20 @@ public class nft_script_copycat : MonoBehaviour
         //new line
     }
 
-    
+    [ContextMenu("LinkChilding")]
+    void DoLinkNaming()
+    {
+        LinkTrans = gameObject.transform.Find("LinkBox_Art");
+        if (LinkTrans != null)
+        {
+            LinkButton = LinkTrans.gameObject;
+        }
+        // gameObject.name = transform.root.gameObject.name;
+        LinkButton.name = "LinkBox_Art " + transform.gameObject.name;
+        DebugText.GetComponent<TextMesh>().text = transform.gameObject.name;
+        //new line
+    }
+
+
 }
 
