@@ -69,7 +69,7 @@ namespace Dcl
         private string exportPath;
 
         private GameObject prefab;
-
+        private Vector2 scrollPosition;
        
         void OnGUI()
         {
@@ -135,7 +135,9 @@ namespace Dcl
         
         void ParcelGUI()
         {
-            EditorGUILayout.BeginVertical("box");
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+            //EditorGUILayout.LabelField("", GUILayout.Width(380), GUILayout.Height(1500));
+        EditorGUILayout.BeginVertical("box");
             var parcels = sceneMeta.parcels;
             EditorGUILayout.BeginHorizontal();
             var style = EditorStyles.foldout;
@@ -517,6 +519,7 @@ namespace Dcl
             }
 
             EditorGUILayout.EndVertical();
+            EditorGUILayout.EndScrollView();
         }
         /*
         void ExportForNowGUI()
