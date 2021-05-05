@@ -65,10 +65,14 @@ class SimpleMove implements IMovement{
       if (this.bOrientAxisToMovement) {
           transform.lookAt(new Vector3(this.targetLocation.x, transform.position.y, this.targetLocation.z))
       }
-      transform.translate(distance)
+
       if (Vector3.Distance(transform.position, this.targetLocation)<=distance.length()) {
+          transform.position = this.targetLocation.clone()
           this.bActive = false
           this.callback()
+      }
+      else{
+        transform.translate(distance)
       }
     }
   }
