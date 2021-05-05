@@ -344,16 +344,6 @@ engine.addSystem(new AutoPlayUnityAudio())
                 exportStr.AppendFormat(SetTransform, entityName, position.x, position.y, position.z);
                 exportStr.AppendFormat(SetRotation, entityName, rotation.x, rotation.y, rotation.z, rotation.w);
                 exportStr.AppendFormat(SetScale, entityName, scale.x, scale.y, scale.z);
-
-            glb_mesh_script glb_mesh = (tra.gameObject.GetComponent("glb_mesh_script") as glb_mesh_script);
-            if (glb_mesh)
-            {
-                ProcessGlbShape(tra, entityName, glb_mesh, exportStr);
-            }
-            else
-            {
-                ProcessShape(tra, entityName, exportStr, resourceRecorder, statistics);
-            }
             
                 Door_script doorObject = (tra.gameObject.GetComponent("Door_script") as Door_script);
                 if (doorObject)
@@ -380,6 +370,16 @@ engine.addSystem(new AutoPlayUnityAudio())
                     exportStr.AppendFormat(SetElevatorButton, entityName, elevatorButtonObject.floor, elevatorButtonObject.elevator.name);
                 }
 
+            }
+
+            glb_mesh_script glb_mesh = (tra.gameObject.GetComponent("glb_mesh_script") as glb_mesh_script);
+            if (glb_mesh)
+            {
+                ProcessGlbShape(tra, entityName, glb_mesh, exportStr);
+            }
+            else
+            {
+                ProcessShape(tra, entityName, exportStr, resourceRecorder, statistics);
             }
 
 
