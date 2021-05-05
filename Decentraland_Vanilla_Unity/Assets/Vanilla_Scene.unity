@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: c8d6d964a89eecf4d9821b89ed9b335c, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 1fe2f17021102bc429e2c1134752931b, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -161,8 +161,14 @@ MonoBehaviour:
   ethAddress: 
   contactName: 
   email: 
+  spawnX: 0
+  spawnY: 1
+  spawnZ: 0
+  landTitle: Land Title
+  landInfo: Land Info
+  landImg: assets/thumbnail.jpg
   sceneToGlTFWiz: {fileID: 447594183}
-  m_GroundMaterial: {fileID: 507630791}
+  m_GroundMaterial: {fileID: 683151620}
 --- !u!4 &447594185
 Transform:
   m_ObjectHideFlags: 0
@@ -180,7 +186,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &507630791
+--- !u!21 &683151620
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
