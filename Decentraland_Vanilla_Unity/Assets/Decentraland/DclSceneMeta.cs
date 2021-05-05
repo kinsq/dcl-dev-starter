@@ -18,9 +18,14 @@ namespace Dcl
         [SerializeField] [HideInInspector] public string spawnX = "0";
         [SerializeField] [HideInInspector] public string spawnY = "1";
         [SerializeField] [HideInInspector] public string spawnZ = "0";
+        [SerializeField] [HideInInspector] public string rotX = "0";
+        [SerializeField] [HideInInspector] public string rotY = "0";
+        [SerializeField] [HideInInspector] public string rotZ = "16";
         [SerializeField] [HideInInspector] public string landTitle = "Land Title";
         [SerializeField] [HideInInspector] public string landInfo = "Land Info";
         [SerializeField] [HideInInspector] public string landImg = "assets/thumbnail.jpg";
+        [SerializeField] [HideInInspector] public bool allowTP;
+        [SerializeField] [HideInInspector] public string allowTPline = "\"ALLOW_TO_MOVE_PLAYER_INSIDE_SCENE\"";
 
 
 

@@ -24,6 +24,11 @@
         "x": {XSPAWN},
         "y": {YSPAWN},
         "z": {ZSPAWN}
+      },
+      "cameraTarget": {
+        "x": {XOR},
+        "y": {YOR},
+        "z": {ZOR}
       }
     }
   ],
@@ -39,6 +44,9 @@
     "blacklist": [],
     "teleportPosition": ""
   },
+  "requiredPermissions": [
+    {GRANT1}
+  ],
   "main": "bin/game.js",
   "tags": []
 }

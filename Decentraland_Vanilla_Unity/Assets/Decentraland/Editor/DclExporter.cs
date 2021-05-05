@@ -411,9 +411,16 @@ namespace Dcl
 				sceneMeta.spawnX = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointX), sceneMeta.spawnX);
 				sceneMeta.spawnY = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointY), sceneMeta.spawnY);
 				sceneMeta.spawnZ = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointZ), sceneMeta.spawnZ);
+                EditorGUILayout.LabelField("Where the player has to look at?", EditorStyles.boldLabel);
+                sceneMeta.rotX = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointX), sceneMeta.rotX);
+                sceneMeta.rotY = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointY), sceneMeta.rotY);
+                sceneMeta.rotZ = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointZ), sceneMeta.rotZ);
+                GUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Allow Teleport?", EditorStyles.boldLabel);
+                sceneMeta.allowTP = EditorGUILayout.Toggle(sceneMeta.allowTP);
+                GUILayout.EndHorizontal();
 
 
-              
                 EditorGUI.indentLevel = 0;
             }
 
@@ -792,6 +799,19 @@ namespace Dcl
                 fileTxt = fileTxt.Replace("{XSPAWN}", sceneMeta.spawnX);
                 fileTxt = fileTxt.Replace("{YSPAWN}", sceneMeta.spawnY);
                 fileTxt = fileTxt.Replace("{ZSPAWN}", sceneMeta.spawnZ);
+
+                fileTxt = fileTxt.Replace("{XOR}", sceneMeta.rotX);
+                fileTxt = fileTxt.Replace("{YOR}", sceneMeta.rotY);
+                fileTxt = fileTxt.Replace("{ZOR}", sceneMeta.rotZ);
+
+               
+                if (sceneMeta.allowTP == true)
+                {
+                    fileTxt = fileTxt.Replace("{GRANT1}", sceneMeta.allowTPline);
+                }
+                else
+                    fileTxt = fileTxt.Replace("{GRANT1}","");
+
 
                 var parcelsString = GetParcelsString();
                 fileTxt = fileTxt.Replace("{PARCELS}", parcelsString);

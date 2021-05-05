@@ -54,7 +54,7 @@ namespace Dcl
         SpawnPointX,
         SpawnPointY,
         SpawnPointZ,
-        LandName,
+		LandName,
         LandDescription,
         LandThumbnail,
 		SDKVersion,

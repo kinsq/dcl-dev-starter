@@ -65,7 +65,7 @@
 	"buffers": [
 		{
 			"byteLength": 1416,
-			"uri": "entity10258n.bin"
+			"uri": "entity11908.bin"
 		}
 	],
 	"bufferViews": [
@@ -111,7 +111,7 @@
 	],
 	"meshes": [
 		{
-			"name": "mesh_Cube_82Cube",
+			"name": "mesh_Cube_590Cube",
 			"primitives": [
 				{
 					"attributes": {
