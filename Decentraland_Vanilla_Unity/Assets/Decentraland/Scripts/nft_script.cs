@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using UnityEditor;
 
 [SelectionBase]
 [ExecuteInEditMode]
@@ -11,11 +12,7 @@ public class nft_script : MonoBehaviour
     [Header("Debug Settings")]
     public bool ShowDummy = false;
     public GameObject Dummy;
-    public bool WritePrefix;
-   // public bool DeletePrefix;
    // public bool CleanBoxes;
-    public bool NukeAll;
-    public bool NukeUI;
     public bool ResetScale;
 
 
@@ -60,22 +57,8 @@ public class nft_script : MonoBehaviour
             Dummy.SetActive(false);
 
         }
-
-        if (WritePrefix == true)
-        {
-            ExecutePrefix();
-            WritePrefix = false;
-
-        }
-        
-        /*  if (DeletePrefix == true)
-        {
-            NukePrefix();
-            DeletePrefix = false;
-
-        }
-        */
-
+                
+       
         /* if (CleanBoxes == true) 
         {
 
@@ -83,27 +66,9 @@ public class nft_script : MonoBehaviour
 
         }
          */
-        if (NukeAll == true)
-        {
-            autor = ("");
-            smartContract = ("");
-            title = ("");
-            owner = ("");
-            description = ("");
-            tokenId = ("");
-            NukeAll = false;
-            Debug.Log("Nuked All the TextBoxes");
-        }
         
-        if (NukeUI == true)
-        {
-            autor = ("");
-            title = ("");
-            owner = ("");
-            description = ("");
-            NukeUI = false;
-            Debug.Log("Nuked All the UI");
-        }
+        
+        
 
         if (ResetScale == true)
         {
@@ -111,7 +76,18 @@ public class nft_script : MonoBehaviour
             ResetScale = false;
         }
     }
-    [ContextMenu("AddPrefix")]
+
+    [ContextMenu("Nuke UI")]
+    void NukeUI()
+        {
+            autor = ("");
+            title = ("");
+            owner = ("");
+            description = ("");
+            Debug.Log("Nuked All the UI");
+        }
+
+[ContextMenu("AddPrefix")]
     void ExecutePrefix()
     {
         autor = "Made by " + autor;
@@ -125,7 +101,27 @@ public class nft_script : MonoBehaviour
          owner = owner.Replace("Owned by", "");
          Debug.Log("Deleted Prefixes");
 
-     }
+    }
+    [ContextMenu("Nuke All")]
+    void NukeAll() {
+        autor = ("");
+        smartContract = ("");
+        title = ("");
+        owner = ("");
+        description = ("");
+        tokenId = ("");
+        Debug.Log("Nuked All the TextBoxes");
+    }
+    
+        
+            
+        
+
+
+private void OnGUI()
+    {
+        GUILayout.Label("Hello");
+    }
 
 
     /*  void CleanText() 
@@ -141,6 +137,6 @@ public class nft_script : MonoBehaviour
 
       }
     */
-   
-   
+
+
 }
