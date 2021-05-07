@@ -111,22 +111,22 @@ public class nft_script : MonoBehaviour
             ResetScale = false;
         }
     }
-    
+    [ContextMenu("AddPrefix")]
     void ExecutePrefix()
     {
         autor = "Made by " + autor;
         owner = "Owned by " + owner;
         Debug.Log("Added Prefixes");
     }
-
-    /* void NukePrefix() 
+    [ContextMenu("DeletePrefix")]
+    void NukePrefix() 
      {
-         autor.Replace("M", "f");
-         owner.Replace("Owned by", "-");
+         autor = autor.Replace("Made by", "");
+         owner = owner.Replace("Owned by", "");
          Debug.Log("Deleted Prefixes");
 
      }
-    */
+
 
     /*  void CleanText() 
       { 
