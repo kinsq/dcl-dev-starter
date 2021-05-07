@@ -405,18 +405,22 @@ namespace Dcl
                 style.wordWrap = true;
                 sceneMeta.landInfo = EditorGUILayout.TextArea(sceneMeta.landInfo, style);
                 sceneMeta.landImg = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.LandThumbnail), sceneMeta.landImg); // url or uri to a jpg containing the thumbnail to be seen from the Atlas
+               
                 EditorGUILayout.LabelField("Land Owner Info", EditorStyles.boldLabel);
                 sceneMeta.ethAddress = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoAddress), sceneMeta.ethAddress); //"owner" stands for ETH Address holding this LAND
 				sceneMeta.contactName = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoName), sceneMeta.contactName); // Name of the owner
 				sceneMeta.email = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.OwnerInfoEmail), sceneMeta.email); // Email or contact form of the owner
-				EditorGUILayout.LabelField("SpawnPoint, use [?,?] for Area", EditorStyles.boldLabel);
-				sceneMeta.spawnX = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointX), sceneMeta.spawnX);
+                
+				EditorGUILayout.LabelField("SpawnPoint, use [?,?] for Area", EditorStyles.boldLabel);                       
+                sceneMeta.spawnX = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointX), sceneMeta.spawnX);
 				sceneMeta.spawnY = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointY), sceneMeta.spawnY);
 				sceneMeta.spawnZ = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointZ), sceneMeta.spawnZ);
+                
                 EditorGUILayout.LabelField("Where the player has to look at?", EditorStyles.boldLabel);
                 sceneMeta.rotX = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointX), sceneMeta.rotX);
                 sceneMeta.rotY = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointY), sceneMeta.rotY);
                 sceneMeta.rotZ = EditorGUILayout.TextField(LabelLocalization.getString(LanguageStringValue.SpawnPointZ), sceneMeta.rotZ);
+
                 GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Allow Teleport?", EditorStyles.boldLabel);
                 sceneMeta.allowTP = EditorGUILayout.Toggle(sceneMeta.allowTP);
@@ -447,6 +451,7 @@ namespace Dcl
                 {
 					newExportPath = EditorUtility.OpenFolderPanel(LabelLocalization.getString(LanguageStringValue.SelectDCLProjectPath), exportPath, "");
                     if (string.IsNullOrEmpty(newExportPath)) newExportPath = exportPath;
+                      
                 }
 
                 if (newExportPath != exportPath)
@@ -468,16 +473,23 @@ namespace Dcl
                 {
                     Export();
                 }
-
                 GUI.backgroundColor = oriColor;
+                var foldercolor = GUI.backgroundColor;
+                GUI.backgroundColor = Color.white;
+                if (GUILayout.Button("Open Folder",GUILayout.Height(32))) 
+                {
+                    ShowExplorer();
+                }
+                GUI.backgroundColor = oriColor;
+                
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
 
                 GUILayout.Space(SPACE_SIZE * 2);
-
+                /*
                 GUILayout.BeginHorizontal();
-                GUILayout.FlexibleSpace();
-				if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.InitProject), GUILayout.Width(105)))
+                GUILayout.FlexibleSpace();*/
+				/*if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.InitProject), GUILayout.Width(105)))
                 {
                     if (Directory.Exists(exportPath))
                     {
@@ -492,9 +504,9 @@ namespace Dcl
                     {
 						ShowNotification(new GUIContent(LabelLocalization.getString(LanguageStringValue.SelectValidProjectFolder)));
                     }
-                }
+                }*/
 
-				if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.RunProject), GUILayout.Width(105)))
+				/*if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.RunProject), GUILayout.Width(105)))
                 {
                     if (Directory.Exists(exportPath))
                     {
@@ -510,10 +522,10 @@ namespace Dcl
                     {
 						ShowNotification(new GUIContent(LabelLocalization.getString(LanguageStringValue.SelectValidProjectFolder)));
                     }
-                }
-
+                }*/
+                /*
                 GUILayout.FlexibleSpace();
-                GUILayout.EndHorizontal();
+                GUILayout.EndHorizontal();*/
 
                 GUILayout.Space(SPACE_SIZE * 2);
             }
@@ -521,6 +533,13 @@ namespace Dcl
             EditorGUILayout.EndVertical();
             EditorGUILayout.EndScrollView();
         }
+
+        public void ShowExplorer()
+        {
+            Application.OpenURL(exportPath);
+        }
+
+
         /*
         void ExportForNowGUI()
         {
