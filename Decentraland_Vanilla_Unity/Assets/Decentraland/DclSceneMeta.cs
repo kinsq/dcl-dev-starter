@@ -19,7 +19,7 @@ namespace Dcl
         [SerializeField] [HideInInspector] public string spawnY = "1";
         [SerializeField] [HideInInspector] public string spawnZ = "0";
         [SerializeField] [HideInInspector] public string rotX = "0";
-        [SerializeField] [HideInInspector] public string rotY = "0";
+        [SerializeField] [HideInInspector] public string rotY = "1";
         [SerializeField] [HideInInspector] public string rotZ = "16";
         [SerializeField] [HideInInspector] public string landTitle = "Land Title";
         [SerializeField] [HideInInspector] public string landInfo = "Land Info";

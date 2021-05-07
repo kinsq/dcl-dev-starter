@@ -101,11 +101,12 @@ namespace Dcl
             #region Help Link
             string url3 = "https://github.com/polygonalmind/decelentraland-starter";
             string version = "https://www.polygonalmind.com/";
+            
             if (GUILayout.Button(string.Format(LabelLocalization.getString(LanguageStringValue.SDKVersion), version), EditorStyles.helpBox))
             {
                 Application.OpenURL(url3);
             }
-
+                       
             string url2 = "https://www.polygonalmind.com/";
             if (GUILayout.Button(string.Format(LabelLocalization.getString(LanguageStringValue.PolygonalMind), url2), EditorStyles.helpBox))
             {
