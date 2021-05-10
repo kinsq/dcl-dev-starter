@@ -97,8 +97,8 @@ public class nft_script : MonoBehaviour
     [ContextMenu("DeletePrefix")]
     void NukePrefix() 
      {
-         autor = autor.Replace("Made by", "");
-         owner = owner.Replace("Owned by", "");
+         autor = autor.Replace("Made by ", "");
+         owner = owner.Replace("Owned by ", "");
          Debug.Log("Deleted Prefixes");
 
     }
@@ -127,10 +127,10 @@ private void OnGUI()
     /*  void CleanText() 
       { 
 
-          autor.Replace("\"", "”");
-          title.Replace("\"", "”");
-          owner.Replace("\"", "”");
-          description.Replace("\"", "”");
+          autor.Replace("\"", "\\"");
+          title.Replace("\"", "\\"");
+          owner.Replace("\"", "\\"");
+          description.Replace("\"", "\\"");
           CleanBoxes = false;
 
           Debug.Log("Cleaned Textes from NFT Script");
