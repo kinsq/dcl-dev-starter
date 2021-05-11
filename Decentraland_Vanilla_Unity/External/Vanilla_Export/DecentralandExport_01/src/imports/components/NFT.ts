@@ -50,7 +50,7 @@ export class TextData{
     )
 
     const triggerEntity = new Entity()
-    triggerEntity.addComponent(new Transform({ position: this.entity.getComponent(Transform).position}))
+    triggerEntity.addComponent(new Transform({ position: utils.getEntityWorldPosition(this.entity)}))
     triggerEntity.addComponent(trigger)
     engine.addEntity(triggerEntity)
     let self = this
@@ -157,7 +157,7 @@ export class NFTdata{
     )
 
     const triggerEntity = new Entity()
-    triggerEntity.addComponent(new Transform({ position: this.entity.getComponent(Transform).position}))
+    triggerEntity.addComponent(new Transform({ position: utils.getEntityWorldPosition(this.entity)}))
     triggerEntity.addComponent(trigger)
     engine.addEntity(triggerEntity)
     let self = this
