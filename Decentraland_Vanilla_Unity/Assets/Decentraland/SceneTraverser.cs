@@ -357,7 +357,12 @@ engine.addSystem(new AutoPlayUnityAudio())
                     {
                         startClosed = "true";
                     }
-                    exportStr.AppendFormat(SetDoor, entityName, doorObject.closeSpeed, doorObject.waitToClose, startClosed, doorObject.closeMoveVector.x, doorObject.closeMoveVector.y, doorObject.closeMoveVector.z);
+                    string instantCloseDisapear = "false";
+                    if (doorObject.instantCloseDisapear)
+                    {
+                        instantCloseDisapear = "true";
+                    }
+                    exportStr.AppendFormat(SetDoor, entityName, doorObject.closeSpeed, doorObject.waitToClose, startClosed, instantCloseDisapear, doorObject.closeMoveVector.x, doorObject.closeMoveVector.y, doorObject.closeMoveVector.z);
                 }
 
                 elavator_button_script elevatorButtonObject = (tra.gameObject.GetComponent("elavator_button_script") as elavator_button_script);
@@ -661,7 +666,7 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetPathPoint = "{0}.getComponent(Path).pathPoints.push({{position: new Vector3({1}, {2}, {3}), speed: {4}, wait: {5}}}) \n";
 
         private const string SetPathFollower = "{0}.addComponent(new PathFollower(\"{1}\", {2})) \n";
-        private const string SetDoor = "{0}.addComponent(new DoorComponent({0}, {1}, {2}, {3}, new Vector3({4}, {5}, {6}))) \n";
+        private const string SetDoor = "{0}.addComponent(new DoorComponent({0}, {1}, {2}, {3}, {4}, new Vector3({5}, {6}, {7}))) \n";
 
         private const string SetTriggerDoor = "trapDoorTriggersInfo.push(new TrapDoorTrigger(new Vector3({0}, {1}, {2}), new Vector3({3}, {4}, {5}), {6}, {7}))\n";
         private const string SetTrigger = "triggersInfo.push(new Trigger(new Vector3({0}, {1}, {2}), new Vector3({3}, {4}, {5}), {6}))\n";
