@@ -11,10 +11,12 @@ export class PathPoint{
   position: Vector3
   speed: number //Speed to get to this point, ovewrite globalSpeed
   wait: number //Seconds to wait in the point before continue to the next
-  constructor(position: Vector3, speed: number, wait: number){
+  callback?: Function 
+  constructor(position: Vector3, speed: number, wait: number, callback = function(){}){
       this.position = position
       this.speed = speed
       this.wait = wait
+      this.callback = callback
   }
 }
 
@@ -166,10 +168,20 @@ export class FollowPathMoveComponent{
                 self.timeout = delay(function(){
                   self.moveToNextPoint()
                 }, waitTime);
+                if(self.targetPoints[self.targetPointIndex].callback){
+                  self.targetPoints[self.targetPointIndex].callback()
+                }
               }
             }
             else{
-              self.moveComponent.movement.callback = self.moveToNextPoint
+              self.moveComponent.movement.callback = function(){
+                var auxTarget = self.targetPointIndex - 1 
+                self.moveToNextPoint()
+                if(self.targetPoints[auxTarget] && self.targetPoints[auxTarget].callback){
+                  self.targetPoints[auxTarget].callback()
+                }
+              }
+              // self.moveComponent.movement.callback = self.moveToNextPoint
             }
             self.moveComponent.movement.targetLocation = self.targetPoints[self.targetPointIndex].position
 
