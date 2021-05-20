@@ -764,11 +764,7 @@ engine.addSystem(new AutoPlayUnityAudio())
 
                             }
 
-                            if (exportStr != null && b)
-                            {
-                                exportStr.AppendFormat(SetMaterialAlbedoTextureHasAlpha, materialName);
-                                exportStr.AppendFormat(SetMaterialAlpha, materialName, material.color.a);
-                            }
+                            
 
                             var bumpTexture = material.HasProperty("_BumpMap") ? material.GetTexture("_BumpMap") : null;
                             if (exportStr != null && bumpTexture)
