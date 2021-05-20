@@ -665,7 +665,9 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetMaterialMetallic = "{0}.metallic = {1}\n";
         private const string SetMaterialRoughness = "{0}.roughness = {1}\n";
         private const string SetMaterialAlbedoTexture = "{0}.albedoTexture = new Texture(\"{1}\")\n";
-        private const string SetMaterialAlbedoTextureHasAlpha = "{0}.hasAlpha = true\n";
+        private const string SetMaterialAlbedoTextureHasAlphaTest = "{0}.transparencyMode = 1\n";
+        private const string SetMaterialAlbedoTextureHasAlphaBlend = "{0}.transparencyMode = 2\n";
+        private const string SetMaterialAlbedoTextureHasAlphaTrans = "{0}.transparencyMode = 3\n";
         private const string SetMaterialAlpha = "{0}.alpha = {1}\n";
         private const string SetMaterialBumptexture = "{0}.bumpTexture = new Texture(\"{1}\")\n";
         private const string SetMaterialEmissiveColor = "{0}.emissiveColor = {1}\n";
@@ -738,9 +740,30 @@ engine.addSystem(new AutoPlayUnityAudio())
                                     GetTextureRelativePath(albedoTex));
                             }
 
-                            bool b = material.IsKeywordEnabled("_ALPHATEST_ON") ||
-                                     material.IsKeywordEnabled("_ALPHABLEND_ON") ||
-                                     material.IsKeywordEnabled("_ALPHAPREMULTIPLY_ON");
+                            bool b = material.IsKeywordEnabled("_ALPHATEST_ON");
+                            if (exportStr != null && b)
+                            {
+                                exportStr.AppendFormat(SetMaterialAlbedoTextureHasAlphaTest, materialName);
+                                exportStr.AppendFormat(SetMaterialAlpha, materialName, material.color.a);
+                            }
+
+                            bool c = material.IsKeywordEnabled("_ALPHABLEND_ON");
+                            if (exportStr != null && c)
+                            {
+                                exportStr.AppendFormat(SetMaterialAlbedoTextureHasAlphaBlend, materialName);
+                                exportStr.AppendFormat(SetMaterialAlpha, materialName, material.color.a);
+                                Debug.Log("EXPORT: Primitive set with alphablend, alpha multiply doesn't apply");
+                            }
+
+                            bool d = material.IsKeywordEnabled("_ALPHAPREMULTIPLY_ON");
+                            if (exportStr != null && d)
+                            {
+                                exportStr.AppendFormat(SetMaterialAlbedoTextureHasAlphaTrans, materialName);
+                                exportStr.AppendFormat(SetMaterialAlpha, materialName, material.color.a);
+                                Debug.Log("EXPORT: Primitive set with alphamultiply, alpha multiply doesn't apply");
+
+                            }
+
                             if (exportStr != null && b)
                             {
                                 exportStr.AppendFormat(SetMaterialAlbedoTextureHasAlpha, materialName);
