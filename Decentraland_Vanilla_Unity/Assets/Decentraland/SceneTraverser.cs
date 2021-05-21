@@ -365,15 +365,15 @@ engine.addSystem(new AutoPlayUnityAudio())
                     exportStr.AppendFormat(SetDoor, entityName, doorObject.closeSpeed, doorObject.waitToClose, startClosed, instantCloseDisapear, doorObject.closeMoveVector.x, doorObject.closeMoveVector.y, doorObject.closeMoveVector.z);
                 }
 
-                Stream_script stream = (tra.gameObject.GetComponent("Stream_script") as Stream_script);
-                if (stream)
+                StreamVideo_script streamVideo = (tra.gameObject.GetComponent("StreamVideo_script") as StreamVideo_script);
+                if (streamVideo)
                 {
-                    if (resourceRecorder.importedModules.IndexOf("Stream") < 0)
+                    if (resourceRecorder.importedModules.IndexOf("StreamVideo") < 0)
                     {
-                        resourceRecorder.importedModules.Add("Stream");
+                        resourceRecorder.importedModules.Add("StreamVideo");
                     }
                     
-                    exportStr.AppendFormat(SetStream, entityName, stream.url);
+                    exportStr.AppendFormat(SetStream, entityName, streamVideo.url, streamVideo.hoverPlay, streamVideo.hoverPause, streamVideo.loop, streamVideo.volumen);
                 }
 
                 elavator_button_script elevatorButtonObject = (tra.gameObject.GetComponent("elavator_button_script") as elavator_button_script);
@@ -686,7 +686,7 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetElevatorButton = "{0}.addComponent(new ElevatorButton({0}, {1}, \"{2}\")) \n";
 
         private const string SetTeleport = "{0}.addComponent(new Teleport({0}, new Vector3({1}, {2}, {3}), \"{4}\")) \n";
-        private const string SetStream = "{0}.addComponent(new Stream({0}, \"{1}\")) \n";
+        private const string SetStream = "{0}.addComponent(new Stream({0}, \"{1}\", \"{2}\", \"{3}\", {4}, {5})) \n";
 
         private const string SetNFT = "{0}.addComponent(new NFTdata({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\")) \n";
         private const string SetTextData = "{0}.addComponent(new TextData({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\")) \n";

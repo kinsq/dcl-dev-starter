@@ -1,13 +1,13 @@
 import { delay } from "../delay"
 
-type StreamInfo = {
+type StreamVideoInfo = {
   url: string,
   material: Material, 
   videoTexture: VideoTexture,
-  //streamComponents?: Stream[]
+  //StreamVideoComponents?: StreamVideo[]
 }
 
-const videoTextureArray: StreamInfo[] = []
+const videoTextureArray: StreamVideoInfo[] = []
 
 function getVideoTexture(url: string){
   for (let i = 0; i < videoTextureArray.length; i++) {
@@ -19,8 +19,8 @@ function getVideoTexture(url: string){
 }
 
 function addVideoTexture(url: string){
-  const streamClip = new VideoClip(url)
-  const texture = new VideoTexture(streamClip)
+  const StreamVideoClip = new VideoClip(url)
+  const texture = new VideoTexture(StreamVideoClip)
   const mat = new Material()
   mat.albedoTexture = texture
   mat.roughness = 1
@@ -28,33 +28,41 @@ function addVideoTexture(url: string){
     url: url,
     material: mat, 
     videoTexture: texture,
-    //streamComponents: []
+    //StreamVideoComponents: []
   })
   return videoTextureArray[videoTextureArray.length-1]
 }
 
 
-@Component("Stream")
-export class Stream{
+@Component("StreamVideo")
+export class StreamVideo{
     entity: Entity
-    streamInfo: StreamInfo
+    StreamVideoInfo: StreamVideoInfo
     pointerDownEvent: OnPointerDown
-    constructor(entity: Entity, url: string, bPlay: boolean = true, bLateRestart: boolean = true){
+    volumen: number
+    bLoop: boolean
+    hoverPlay: string
+    hoverPause: string
+    constructor(entity: Entity, url: string, hoverPlay: string = "Play", hoverPause: string = "Pause", bLopp: boolean = false, volumen: number = 5, bPlay: boolean = true, bLateRestart: boolean = true){
         this.entity = entity
-        this.streamInfo = getVideoTexture(url)
-        if(!this.streamInfo){
-          this.streamInfo = addVideoTexture(url)
-          //this.streamInfo.streamComponents.push(this)
+        this.volumen = volumen
+        this.bLoop = bLopp
+        this.hoverPlay = hoverPlay
+        this.hoverPause = hoverPause
+        this.StreamVideoInfo = getVideoTexture(url)
+        if(!this.StreamVideoInfo){
+          this.StreamVideoInfo = addVideoTexture(url)
+          //this.StreamVideoInfo.StreamVideoComponents.push(this)
         }
         
         if (!entity.hasComponent(PlaneShape) && !entity.hasComponent(BoxShape) && !entity.hasComponent(GLTFShape)) {
             entity.addComponent(new PlaneShape())
         }
-        entity.addComponentOrReplace(this.streamInfo.material)
+        entity.addComponentOrReplace(this.StreamVideoInfo.material)
         var self = this
         this.pointerDownEvent = new OnPointerDown(
           () => {
-            self.play(!self.streamInfo.videoTexture.playing)
+            self.play(!self.StreamVideoInfo.videoTexture.playing)
           },
           {
             hoverText: "Play"
@@ -79,10 +87,16 @@ export class Stream{
       }, waitSeconds*1000);
     }
     play(bPlay: boolean = true){
-      this.streamInfo.videoTexture.playing = bPlay
+      this.StreamVideoInfo.videoTexture.playing = bPlay
       if (bPlay) {
-        this.pointerDownEvent.hoverText = "Pause"
+        this.pointerDownEvent.hoverText = this.hoverPlay
       }
-      else this.pointerDownEvent.hoverText = "Play"
+      else this.pointerDownEvent.hoverText = this.hoverPause
+    }
+    setVolumen(volumen: number){
+      this.StreamVideoInfo.videoTexture.volume = volumen
+    }
+    setLoop(bLoop: boolean){
+      this.StreamVideoInfo.videoTexture.loop = bLoop
     }
 }
