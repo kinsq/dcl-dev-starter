@@ -365,17 +365,6 @@ engine.addSystem(new AutoPlayUnityAudio())
                     exportStr.AppendFormat(SetDoor, entityName, doorObject.closeSpeed, doorObject.waitToClose, startClosed, instantCloseDisapear, doorObject.closeMoveVector.x, doorObject.closeMoveVector.y, doorObject.closeMoveVector.z);
                 }
 
-                StreamVideo_script streamVideo = (tra.gameObject.GetComponent("StreamVideo_script") as StreamVideo_script);
-                if (streamVideo)
-                {
-                    if (resourceRecorder.importedModules.IndexOf("StreamVideo") < 0)
-                    {
-                        resourceRecorder.importedModules.Add("StreamVideo");
-                    }
-                    
-                    exportStr.AppendFormat(SetStream, entityName, streamVideo.url, streamVideo.hoverPlay, streamVideo.hoverPause, streamVideo.loop, streamVideo.volumen);
-                }
-
                 elavator_button_script elevatorButtonObject = (tra.gameObject.GetComponent("elavator_button_script") as elavator_button_script);
                 if (elevatorButtonObject)
                 {
@@ -557,6 +546,27 @@ engine.addSystem(new AutoPlayUnityAudio())
                  exportStr.AppendFormat(SetScale, entityName, scale.x, scale.y, scale.z*-1);
 
                 }
+                StreamVideo_script streamVideo = (tra.gameObject.GetComponent("StreamVideo_script") as StreamVideo_script);
+                if (streamVideo)
+                {
+                    if (resourceRecorder.importedModules.IndexOf("StreamVideo") < 0)
+                    {
+                        resourceRecorder.importedModules.Add("StreamVideo");
+                    }
+
+                    exportStr.AppendFormat(SetStreamVideo, entityName, streamVideo.url, streamVideo.hoverPlay, streamVideo.hoverPause, streamVideo.loop, streamVideo.volumen);
+                }
+
+                StreamImage_script streamImage = (tra.gameObject.GetComponent("StreamImage_script") as StreamImage_script);
+                if (streamImage)
+                {
+                    if (resourceRecorder.importedModules.IndexOf("StreamImage") < 0)
+                    {
+                        resourceRecorder.importedModules.Add("StreamImage");
+                    }
+
+                    exportStr.AppendFormat(SetStreamImage, entityName, streamImage.url, streamImage.metalic, streamImage.roughness);
+                }
             }
 
 
@@ -686,7 +696,8 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetElevatorButton = "{0}.addComponent(new ElevatorButton({0}, {1}, \"{2}\")) \n";
 
         private const string SetTeleport = "{0}.addComponent(new Teleport({0}, new Vector3({1}, {2}, {3}), \"{4}\")) \n";
-        private const string SetStream = "{0}.addComponent(new Stream({0}, \"{1}\", \"{2}\", \"{3}\", {4}, {5})) \n";
+        private const string SetStreamVideo = "{0}.addComponent(new StreamVideo({0}, \"{1}\", \"{2}\", \"{3}\", {4}, {5})) \n";
+        private const string SetStreamImage = "{0}.addComponent(new StreamImage({0}, \"{1}\", {2}, {3})) \n";
 
         private const string SetNFT = "{0}.addComponent(new NFTdata({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\", \"{7}\")) \n";
         private const string SetTextData = "{0}.addComponent(new TextData({0}, \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\")) \n";

@@ -100,3 +100,25 @@ export class StreamVideo{
       this.StreamVideoInfo.videoTexture.loop = bLoop
     }
 }
+
+@Component("StreamImage")
+export class StreamImage{
+  entity: Entity
+  url: string
+  material: Material
+  constructor(entity:Entity, url: string, metalic: number = 0, roughness: number = 1){
+    this.entity = entity
+    this.url = url
+    if (!entity.hasComponent(PlaneShape) && !entity.hasComponent(BoxShape) && !entity.hasComponent(GLTFShape)) {
+      entity.addComponent(new PlaneShape())
+    }
+    const myTexture = new Texture(url)
+    this.material = new Material()
+    this.material.albedoTexture = myTexture
+    this.material.metallic = metalic
+    this.material.roughness = roughness
+    entity.addComponentOrReplace(this.material)
+
+    entity.getComponent(Transform).scale.y = -entity.getComponent(Transform).scale.y
+  }
+}
