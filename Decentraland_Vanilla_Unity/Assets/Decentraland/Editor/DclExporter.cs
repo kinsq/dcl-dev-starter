@@ -67,6 +67,10 @@ namespace Dcl
         private string editParcelsText;
 
         private string exportPath;
+        private string newExportPath;
+        private string projectName;
+        // This code crashes Unity  
+        // private string projectName = Application.productName.Replace("_Unity", "_Export");
 
         private GameObject prefab;
         private Vector2 scrollPosition;
@@ -444,15 +448,43 @@ namespace Dcl
 			var foldout = EditorUtil.GUILayout.AutoSavedFoldout("DclExportForDCL", LabelLocalization.getString(LanguageStringValue.StandardExport), true, null);
             if (foldout)
             {
-				GUILayout.Label(LabelLocalization.getString(LanguageStringValue.DCLProjectPath), EditorStyles.boldLabel);
-                EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(SPACE_SIZE * 2);
+                
+                GUILayout.Label(LabelLocalization.getString(LanguageStringValue.DCLProjectPath)+": "+projectName, EditorStyles.boldLabel);
+                
+                
+                
+               
                 exportPath = EditorPrefs.GetString("DclExportPath");
-                var newExportPath = EditorGUILayout.TextField(exportPath);
-                if (GUILayout.Button("...", GUILayout.Width(24), GUILayout.Height(24)))
+                
+                
+                //exportPath = "";
+                 
+                newExportPath = EditorGUILayout.TextField(exportPath);
+                               
+
+                
+
+
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Wipe", GUILayout.Height(24)))
                 {
-					newExportPath = EditorUtility.OpenFolderPanel(LabelLocalization.getString(LanguageStringValue.SelectDCLProjectPath), exportPath, "");
+
+                    newExportPath = "";
+
+                }
+
+                if (GUILayout.Button("Set Folder", GUILayout.Height(24)))
+                {
+                    newExportPath = EditorUtility.OpenFolderPanel(LabelLocalization.getString(LanguageStringValue.SelectDCLProjectPath), exportPath, "");
                     if (string.IsNullOrEmpty(newExportPath)) newExportPath = exportPath;
-                      
+
+                }
+
+                if (GUILayout.Button("Auto Find", GUILayout.Height(24)))
+                {
+                    AutoPathExport();
+                    ShowNotification(new GUIContent("Project set: "+ projectName +"/DecentralandExport_01"));
                 }
 
                 if (newExportPath != exportPath)
@@ -460,19 +492,64 @@ namespace Dcl
                     exportPath = newExportPath;
                     EditorPrefs.SetString("DclExportPath", newExportPath);
                 }
+                GUILayout.EndHorizontal();
 
-                EditorGUILayout.EndHorizontal();
-                
 
                 GUILayout.Space(SPACE_SIZE);
+                GUILayout.Space(SPACE_SIZE * 2);
+
+
+                EditorGUILayout.BeginVertical("box");
+                GUILayout.Space(SPACE_SIZE * 2);
 
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
                 var oriColor = GUI.backgroundColor;
+                if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.RunProject), GUILayout.Width(105), GUILayout.Height(32)))
+                {
+                    if (Directory.Exists(exportPath))
+                    {
+                        if (!exportPath.Contains(projectName))
+                        {
+                            if (EditorUtility.DisplayDialog(LabelLocalization.getString(LanguageStringValue.ConfimRunDCLProject),
+                                string.Format(LabelLocalization.getString(LanguageStringValue.RunDCLProjectAreYouSure) + "  The run is not being done in the correct project", exportPath), LabelLocalization.getString(LanguageStringValue.YES),
+                                LabelLocalization.getString(LanguageStringValue.NO)))
+                            {
+                                DclCLI.DclStart(exportPath);
+                                ShowNotification(new GUIContent(LabelLocalization.getString(LanguageStringValue.DCLStartWait10Seconds)));
+                            }
+                        }
+                        else
+                        {
+                            if (EditorUtility.DisplayDialog(LabelLocalization.getString(LanguageStringValue.ConfimRunDCLProject),
+                                 string.Format(LabelLocalization.getString(LanguageStringValue.RunDCLProjectAreYouSure) , exportPath), LabelLocalization.getString(LanguageStringValue.YES),
+                                 LabelLocalization.getString(LanguageStringValue.NO)))
+                            {
+                                DclCLI.DclStart(exportPath);
+                                ShowNotification(new GUIContent(LabelLocalization.getString(LanguageStringValue.DCLStartWait10Seconds)));
+                            }
+                        }
+                    }                    
+                    else
+                    {
+                        ShowNotification(new GUIContent(LabelLocalization.getString(LanguageStringValue.SelectValidProjectFolder)));
+                    }
+                }
                 GUI.backgroundColor = Color.green;
 				if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.Export), GUILayout.Width(220), GUILayout.Height(32)))
                 {
-                    Export();
+                    if (!exportPath.Contains(projectName))
+                    {
+                        if (EditorUtility.DisplayDialog("WARNING","The export is not being done in the correct project folder, Continue?", LabelLocalization.getString(LanguageStringValue.YES),
+                                LabelLocalization.getString(LanguageStringValue.NO)))
+                        {
+                            Export();                            
+                        }
+                       
+                    }
+                    else
+                        Export();
+
                 }
                 GUI.backgroundColor = oriColor;
                 var foldercolor = GUI.backgroundColor;
@@ -482,15 +559,18 @@ namespace Dcl
                     ShowExplorer();
                 }
                 GUI.backgroundColor = oriColor;
-                
-                GUILayout.FlexibleSpace();
+                                
+
+                    GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
 
                 GUILayout.Space(SPACE_SIZE * 2);
+                GUILayout.EndVertical();
+
                 /*
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();*/
-				/*if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.InitProject), GUILayout.Width(105)))
+                /*if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.InitProject), GUILayout.Width(105)))
                 {
                     if (Directory.Exists(exportPath))
                     {
@@ -507,7 +587,7 @@ namespace Dcl
                     }
                 }*/
 
-				/*if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.RunProject), GUILayout.Width(105)))
+                /*if (GUILayout.Button(LabelLocalization.getString(LanguageStringValue.RunProject), GUILayout.Width(105)))
                 {
                     if (Directory.Exists(exportPath))
                     {
@@ -531,9 +611,27 @@ namespace Dcl
                 GUILayout.Space(SPACE_SIZE * 2);
             }
 
-            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndVertical();            
             EditorGUILayout.EndScrollView();
         }
+
+        public void AutoPathExport()
+        {
+            // Application.dataPath returns something like C:/MyWork/UnityProject/Asset
+            // back 1 level using "../" to get to project path
+
+            // C:/MyWork/UnityProject/
+            string projectFolder = Path.Combine(Application.dataPath, "../");
+            projectFolder = Path.GetFullPath(projectFolder);
+            string decentralandFolder = Application.productName.Replace("_Unity", "_Export");
+            string exportchild = projectFolder + "External/" + decentralandFolder + "/DecentralandExport_01/";
+            exportchild = Path.GetFullPath(exportchild);
+
+            projectName = decentralandFolder;
+            newExportPath = exportchild;
+        }
+
+       
 
         public void ShowExplorer()
         {
@@ -724,12 +822,13 @@ namespace Dcl
         /// </summary>
         void Export()
         {
+            Debug.Log("Export Status: Beginning");
             if (string.IsNullOrEmpty(exportPath))
             {
-                EditorUtility.DisplayDialog("NO Path!", "You must assign the export path!", null, "OK");
+                EditorUtility.DisplayDialog("Path Incorrect", "You must assign a valid path!", "OK", "OK");
                 return;
             }
-
+            
             if (!Directory.Exists(exportPath)) Directory.CreateDirectory("exportPath");
 
             //delete all files in exportPath/unity_assets/
@@ -740,13 +839,14 @@ namespace Dcl
                 //ClearFolder(unityAssetsFolderPath);
                 UnityEditor.FileUtil.DeleteFileOrDirectory(unityAssetsFolderPath);
             }
-
+            
             Directory.CreateDirectory(unityAssetsFolderPath);//TODO:用异步等待删除完毕
 
-
+            
             if (!Directory.Exists(Path.Combine(exportPath, "src"))){
                 Directory.CreateDirectory(Path.Combine(exportPath, "src"));
-            } 
+            }
+
             
             var statistics = new SceneStatistics();
 
@@ -761,7 +861,7 @@ namespace Dcl
 				string tempPath = Path.Combine (unityAssetsFolderPath, SceneTraverser.GetIdentityName(go) + ".gltf");
 				sceneMeta.sceneToGlTFWiz.ExportGameObjectAndChildren(go, tempPath, null, false, true, true, false);
             }
-
+            
             //textures
             foreach (var texture in resourceRecorder.primitiveTexturesToExport)
             {
@@ -786,7 +886,7 @@ namespace Dcl
                 }
                 Debug.Log("Texture out "+ relPath);
             }
-
+            
             //audioClips
             foreach (var audioClip in resourceRecorder.audioClipsToExport)
             {
@@ -846,7 +946,7 @@ namespace Dcl
                 var filePath = Path.Combine(exportPath, "scene.json");
                 File.WriteAllText(filePath, fileTxt);
             }
-
+            
             Debug.Log("===Export Complete "+DateTime.Now.ToString("HH:mm")+"===");
 
         }
