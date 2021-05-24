@@ -682,7 +682,7 @@ engine.addSystem(new AutoPlayUnityAudio())
         private const string SetMaterialAlbedoTextureHasAlphaTest = "{0}.transparencyMode = 1\n";
         private const string SetMaterialAlbedoTextureHasAlphaBlend = "{0}.transparencyMode = 2\n";
         private const string SetMaterialAlbedoTextureHasAlphaTrans = "{0}.transparencyMode = 3\n";
-        private const string SetMaterialAlpha = "{0}.alpha = {1}\n";
+        private const string SetMaterialAlpha = "{0}.alphaTest = {1}\n";
         private const string SetMaterialBumptexture = "{0}.bumpTexture = new Texture(\"{1}\")\n";
         private const string SetMaterialEmissiveColor = "{0}.emissiveColor = {1}\n";
         private const string SetMaterialRefractionTexture = "{0}.refractionTexture = new Texture(\"{1}\")\n";
