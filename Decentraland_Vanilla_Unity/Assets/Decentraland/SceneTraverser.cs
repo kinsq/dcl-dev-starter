@@ -553,8 +553,12 @@ engine.addSystem(new AutoPlayUnityAudio())
                     {
                         resourceRecorder.importedModules.Add("StreamVideo");
                     }
-
-                    exportStr.AppendFormat(SetStreamVideo, entityName, streamVideo.url, streamVideo.hoverPlay, streamVideo.hoverPause, streamVideo.loop, streamVideo.volumen);
+                    string loop = "false";
+                    if (streamVideo.loop)
+                    {
+                        loop = "true";
+                    }
+                    exportStr.AppendFormat(SetStreamVideo, entityName, streamVideo.url, streamVideo.hoverPlay, streamVideo.hoverPause, loop, streamVideo.volumen);
                 }
 
                 StreamImage_script streamImage = (tra.gameObject.GetComponent("StreamImage_script") as StreamImage_script);
