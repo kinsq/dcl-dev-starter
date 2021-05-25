@@ -1,18 +1,21 @@
-var entity11908 = new Entity("Cube")
-engine.addEntity(entity11908)
-entity11908.addComponent(new Transform({ position: new Vector3(7.31, 2.44, 8.11) }))
-entity11908.getComponent(Transform).rotation.set(0, 0, 0, 1)
-entity11908.getComponent(Transform).scale.set(3.2154, 3.2154, 3.2154)
-entity11908.addComponent(new GLTFShape("unity_assets/entity11908.gltf"))
-entity11908.getComponent(GLTFShape).withCollisions = false
-entity11908.getComponent(Transform).rotation.set(0, 1, 0, -4.371139E-08)
-entity11908.addComponent(new Billboard(false, true, false)) 
-entity11908.getComponent(Transform).scale.set(3.2154, 3.2154, -3.2154)
-var entity11896 = new Entity("Quad")
-engine.addEntity(entity11896)
-entity11896.addComponent(new Transform({ position: new Vector3(8, 0, 8) }))
-entity11896.getComponent(Transform).rotation.set(0.7071068, 0, 0, 0.7071068)
-entity11896.getComponent(Transform).scale.set(16, 16, 1)
-entity11896.addComponent(new GLTFShape("unity_assets/entity11896.gltf"))
-entity11896.getComponent(GLTFShape).withCollisions = false
-entity11896.getComponent(Transform).rotation.set(-3.090862E-08, 0.7071068, 0.7071069, -3.090862E-08)
+var entity12198 = new Entity("Quad")
+engine.addEntity(entity12198)
+entity12198.addComponent(new Transform({ position: new Vector3(8, 0, 8) }))
+entity12198.getComponent(Transform).rotation.set(0.7071068, 0, 0, 0.7071068)
+entity12198.getComponent(Transform).scale.set(16, 16, 1)
+entity12198.addComponent(new GLTFShape("unity_assets/entity12198.gltf"))
+entity12198.getComponent(GLTFShape).withCollisions = false
+entity12198.getComponent(Transform).rotation.set(-3.090862E-08, 0.7071068, 0.7071069, -3.090862E-08)
+var entity14870n = new Entity("LinkText (1)")
+engine.addEntity(entity14870n)
+entity14870n.addComponent(new Transform({ position: new Vector3(7.33, 1.183, 7.27) }))
+entity14870n.getComponent(Transform).rotation.set(0, -0.5202005, 0, 0.8540442)
+entity14870n.getComponent(Transform).scale.set(0.3506964, 0.3506963, 7.013927)
+entity14870n.addComponent(new TextShape())
+entity14870n.getComponent(TextShape).value = "Hello\ World HERE WE ARE IN THE CENTER OF STUPIDITY"
+entity14870n.getComponent(TextShape).color = new Color3(0, 0, 0)
+entity14870n.getComponent(TextShape).width = 30
+entity14870n.getComponent(TextShape).height = 15
+entity14870n.getComponent(TextShape).fontSize = 30
+entity14870n.getComponent(TextShape).textWrapping = true
+

@@ -11,90 +11,81 @@
 			"bufferView": 2,
 			"byteOffset": 0,
 			"componentType": 5126,
-			"count": 24,
-			"max": [ 0.5, 0.5, 0.5 ],
-			"min": [ -0.5, -0.5, -0.5 ],
+			"count": 4,
+			"max": [ 0.5, 0.5, 3.061617E-17 ],
+			"min": [ -0.5, -0.5, -3.061617E-17 ],
 			"type": "VEC3"
 		},
 		{
 			"bufferView": 2,
-			"byteOffset": 288,
+			"byteOffset": 48,
 			"componentType": 5126,
-			"count": 24,
-			"max": [ 1, 1, 1 ],
-			"min": [ -1, -1, -1 ],
+			"count": 4,
+			"max": [ 0, 0, 1 ],
+			"min": [ 0, 0, 1 ],
 			"type": "VEC3"
 		},
 		{
 			"bufferView": 1,
 			"byteOffset": 0,
 			"componentType": 5126,
-			"count": 24,
+			"count": 4,
 			"max": [ 1, 1 ],
 			"min": [ 0, 0 ],
-			"type": "VEC2"
-		},
-		{
-			"bufferView": 1,
-			"byteOffset": 192,
-			"componentType": 5126,
-			"count": 24,
-			"max": [ 0.9966581, 0.6528358 ],
-			"min": [ 0.004055766, 0.004055766 ],
 			"type": "VEC2"
 		},
 		{
 			"bufferView": 3,
 			"byteOffset": 0,
 			"componentType": 5126,
-			"count": 24,
-			"max": [ 0, 0, 1, 1 ],
-			"min": [ -1, 0, -1, 1 ],
+			"count": 4,
+			"max": [ 1, 0, 0, 1 ],
+			"min": [ 1, 0, 0, 1 ],
 			"type": "VEC4"
 		},
 		{
 			"bufferView": 0,
 			"byteOffset": 0,
 			"componentType": 5123,
-			"count": 36,
-			"max": [ 23 ],
+			"count": 6,
+			"max": [ 3 ],
 			"min": [ 0 ],
 			"type": "SCALAR"
 		}
 	],
 	"buffers": [
 		{
-			"byteLength": 1416,
-			"uri": "entity11908.bin"
+			"byteLength": 204,
+			"uri": "entity12198.bin"
 		}
 	],
 	"bufferViews": [
 		{
 			"buffer": 0,
-			"byteLength": 72,
+			"byteLength": 12,
 			"target": 34963,
-			"byteOffset": 1344
+			"byteOffset": 192
 		},
 		{
 			"buffer": 0,
-			"byteLength": 384,
+			"byteLength": 32,
 			"target": 34962,
 			"byteStride": 8,
 			"byteOffset": 0
 		},
 		{
 			"buffer": 0,
-			"byteLength": 576,
+			"byteLength": 96,
 			"target": 34962,
 			"byteStride": 12,
-			"byteOffset": 384
+			"byteOffset": 32
 		},
 		{
 			"buffer": 0,
-			"byteLength": 384,
+			"byteLength": 64,
 			"target": 34962,
 			"byteStride": 16,
-			"byteOffset": 960
+			"byteOffset": 128
 		}
 	],
 	"materials": [
@@ -111,17 +102,16 @@
 	],
 	"meshes": [
 		{
-			"name": "mesh_Cube_590Cube",
+			"name": "mesh_Quad_600Quad",
 			"primitives": [
 				{
 					"attributes": {
 						"POSITION": 0,
 						"NORMAL": 1,
 						"TEXCOORD_0": 2,
-						"TEXCOORD_1": 3,
-						"TANGENT": 4
+						"TANGENT": 3
 					},
-					"indices": 5,
+					"indices": 4,
 					"material": 0,
 					"mode": 4
 				}
@@ -136,7 +126,7 @@
 			]
 		},
 		{
-			"name": "node_Cube",
+			"name": "node_Quad",
 			"mesh": 0,
 			"matrix": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 		}

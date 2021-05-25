@@ -58,7 +58,8 @@ namespace Dcl
             var window = (DclExporter) GetWindow(typeof(DclExporter));
 			window.titleContent = new GUIContent(LabelLocalization.getString(LanguageStringValue.DCLExporter));
             window.Show();
-            window.minSize = new Vector2(240, 400);
+            // No min Size needed with scroll windows
+            // window.minSize = new Vector2(240, 400);
         }
 
         private DclSceneMeta sceneMeta;
